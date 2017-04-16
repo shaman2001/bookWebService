@@ -12,7 +12,7 @@ public class Book {
     private Integer yearOfIssue;
     private String localLink;
 
-    public Book() {
+/*    public Book() {
         this.id = 0;
         this.name = "";
         this.genre = "";
@@ -20,7 +20,7 @@ public class Book {
         this.yearOfIssue = 1980;
         this.localLink = "";
     }
-
+*/
     public Book(BookBuilder bookBuilder) {
         this.id = bookBuilder.id;
         this.name = bookBuilder.name;
@@ -30,6 +30,25 @@ public class Book {
         this.localLink = bookBuilder.localLink;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setYearOfIssue(Integer yearOfIssue) {
+        this.yearOfIssue = yearOfIssue;
+    }
+
+    public void setLocalLink(String localLink) {
+        this.localLink = localLink;
+    }
 
     public Integer getId() {
         return id;
@@ -122,4 +141,29 @@ public class Book {
         return builder.toString();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Book book = (Book) obj;
+
+        if (!id.equals(book.id)) return false;
+        if (!name.equals(book.name)) return false;
+        if (!genre.equals(book.genre)) return false;
+        if (!author.equals(book.author)) return false;
+        if (!yearOfIssue.equals(book.yearOfIssue)) return false;
+        return localLink.equals(book.localLink);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + genre.hashCode();
+        result = 31 * result + author.hashCode();
+        result = 31 * result + yearOfIssue.hashCode();
+        result = 31 * result + localLink.hashCode();
+        return result;
+    }
 }
