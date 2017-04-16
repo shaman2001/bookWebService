@@ -2,13 +2,14 @@ package com.epam.rest;
 
 import com.epam.rest.entity.Book;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.TreeSet;
-import java.util.Set;
 
 public class BookShelf {
 
     private final static String FTP_BASE_ADDRESS = "ftp://127.0.0.1:25/pub/";
-    private Set<Book> bookList;
+    private TreeSet<Book> bookList;
 
     public BookShelf() {
         bookList = new TreeSet<>();
@@ -34,13 +35,39 @@ public class BookShelf {
         return true;
     }
 
-    public Book getBookById(Integer id){
+    public ArrayList<Book> getBook() {
+        return new ArrayList<>(bookList);
+    }
+
+    public ArrayList<Book> getBook(Integer id) {
         for(Book book: bookList) {
             if (book.getId().equals(id)) {
-                return book;
+                return new ArrayList<>(Collections.singletonList(book));
             }
         }
         return null;
+    }
+
+    public ArrayList<Book> getBook(Book prm) {
+        if (prm.getId()!=0) {
+            for(Book book: bookList) {
+                if (book.getId().equals(prm.getId())) {
+                    return new ArrayList<>(Collections.singletonList(book));
+                }
+            }
+        }
+        ArrayList<Book> result = new ArrayList<>();
+        for(Book book: bookList) {
+            if ((!prm.getName().equals("") && book.getName().equals(prm.getName()))
+                    || (!prm.getGenre().equals("") && book.getGenre().equals(prm.getGenre()))
+                    || (!prm.getAuthor().equals("") && book.getAuthor().equals(prm.getAuthor()))
+                    || (prm.getYearOfIssue()!= 0 && book.getYearOfIssue().equals(prm.getYearOfIssue()))
+                    || (!prm.getLocalLink().equals("") && book.getLocalLink().equals(prm.getLocalLink()))) {
+                result.add(book);
+            }
+
+        }
+        return result.size()!=0 ? result : null;
     }
 
     public boolean addBook(Book book) {
@@ -64,4 +91,6 @@ public class BookShelf {
         }
         return false;
     }
+
+
 }

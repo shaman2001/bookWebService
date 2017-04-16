@@ -6,8 +6,8 @@ import org.apache.http.impl.EnglishReasonPhraseCatalog;
 import org.apache.http.message.BasicHttpResponse;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Locale;
+
 
 public class ResponseHandler {
 
@@ -16,12 +16,14 @@ public class ResponseHandler {
 
     private RequestHandler request;
     private BasicHttpResponse response;
-    private List<Book> bookShelf;
-
 
     public ResponseHandler (RequestHandler rqst) {
         this.request = rqst;
         this.response = null;
+    }
+
+    public BasicHttpResponse getResponse() {
+        return this.response;
     }
 
     public void prepareResponse() {
@@ -59,6 +61,7 @@ public class ResponseHandler {
         if (this.request.getParams().size() == 0) {
 
         }
+
         this.response.addHeader("Content-Length", );
     }
 

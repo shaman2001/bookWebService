@@ -1,7 +1,6 @@
 package com.epam.rest;
 
 import com.sun.net.httpserver.HttpServer;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.Date;
@@ -24,16 +23,11 @@ public class SocketHandler implements Runnable {
 
     public void run () {
         try {
-         /* Получаем заголовок сообщения от клиента */
-            String header = readRequest();
-            System.out.println(header + "\n");
-         /* Получаем из заголовка указатель на интересующий ресурс */
-//            String url = getURIFromHeader(header);
-//            System.out.println("Resource: " + url + "\n");
-         /* Отправляем содержимое ресурса клиенту */
-//            int code = send(url);
-//            System.out.println("Result code: " + code + "\n");
-            System.out.println(writeResponse(RESPONSE_STR));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inStr));
+            RequestHandler request = new RequestHandler(reader);
+            ResponseHandler response = new ResponseHandler(request);
+
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

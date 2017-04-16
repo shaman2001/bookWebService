@@ -1,7 +1,7 @@
 package com.epam.rest;
 
-import com.sun.deploy.net.BasicHttpRequest;
-import com.sun.deploy.net.HttpRequest;
+//import com.sun.deploy.net.BasicHttpRequest;
+//import com.sun.deploy.net.HttpRequest;
 import org.apache.http.Header;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.message.BasicHeader;
@@ -23,7 +23,7 @@ public class RequestHandler {
     private HashMap<String, String> params;
     private int[] httpVer;
 
-    public RequestHandler (String header) {
+/*    public RequestHandler (String header) {
         String[] headersArray = header.split("\r\n");
         HttpRequest request = new BasicHttpRequest();
 //        HttpGet req = new HttpGet();
@@ -32,7 +32,7 @@ public class RequestHandler {
             for (String str: headersArray) {
                 headers.put(str.split(": ")[0], str.split(": ")[1]);
             }
-    }
+    }*/
 
     public RequestHandler(BufferedReader bufReader) {
         reader = bufReader;

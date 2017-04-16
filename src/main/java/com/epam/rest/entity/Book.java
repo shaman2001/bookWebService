@@ -12,15 +12,15 @@ public class Book {
     private Integer yearOfIssue;
     private String localLink;
 
-/*    public Book() {
+    public Book() {
         this.id = 0;
         this.name = "";
         this.genre = "";
         this.author = "";
-        this.yearOfIssue = 1980;
+        this.yearOfIssue = 0;
         this.localLink = "";
     }
-*/
+
     public Book(BookBuilder bookBuilder) {
         this.id = bookBuilder.id;
         this.name = bookBuilder.name;

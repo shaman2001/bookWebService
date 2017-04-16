@@ -1,24 +1,21 @@
 package com.epam.rest;
 
-import com.epam.rest.entity.Book;
 import com.epam.rest.helper.PropertyLoader;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.json.simple.JSONObject;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
 
-public class BookService {
+public class App {
 
-    private static final Logger LOG = LogManager.getLogger(BookService.class);
+    private static final Logger LOG = LogManager.getLogger(App.class);
 
-    long currentId = 123;
-    Map<Long, Book> customers = new HashMap<>();
+//    long currentId = 123;
+//    Map<Long, Book> customers = new HashMap<>();
+
 
     public static void main(String args[] ) throws IOException {
         final Integer PORT = Integer.parseInt(PropertyLoader.getProperty("server.port"));
@@ -30,6 +27,7 @@ public class BookService {
             LOG.error("Port" + PORT + "is blocked");
             System.exit(-1);
         }
+        BookShelf bookShelf = new BookShelf();
         while (true) {
             try {
                 Socket clientSocket = server.accept();
