@@ -21,6 +21,15 @@ public class Book {
         this.localLink = "";
     }
 
+    public Book(Integer p_id, String p_name, String p_genre, String p_author, Integer p_uoissue, String link) {
+        this.id = p_id;
+        this.name = p_name;
+        this.genre = p_genre;
+        this.author = p_author;
+        this.yearOfIssue = p_uoissue;
+        this.localLink = link;
+    }
+
     public Book(BookBuilder bookBuilder) {
         this.id = bookBuilder.id;
         this.name = bookBuilder.name;

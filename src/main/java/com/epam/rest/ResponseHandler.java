@@ -1,78 +1,100 @@
 package com.epam.rest;
 
-import com.epam.rest.entity.Book;
+import static com.epam.rest.constants.CommonConstants.*;
+
+import com.epam.rest.helper.DateHelper;
 import org.apache.http.ProtocolVersion;
-import org.apache.http.impl.EnglishReasonPhraseCatalog;
-import org.apache.http.message.BasicHttpResponse;
+import org.json.simple.JSONArray;
 
 import java.io.IOException;
-import java.util.Locale;
+import java.io.OutputStream;
+import java.util.HashMap;
 
 
 public class ResponseHandler {
 
-    private final static String CT_JSON = "application/json";
-    private final static String CT_HTML = "text/html; charset=utf-8";
+    private final static String CONTENT_TYPE_JSON = "application/json";
+    private final static String CONTENT_TYPE_HTML = "text/html; charset=utf-8";
 
-    private RequestHandler request;
-    private BasicHttpResponse response;
+    private RequestHandler requestHnd;
+    private Response response;
+    private OutputStream outputStream;
 
-    public ResponseHandler (RequestHandler rqst) {
-        this.request = rqst;
-        this.response = null;
+
+    public ResponseHandler (RequestHandler rqst, OutputStream outStr) {
+        this.requestHnd = rqst;
+        this.outputStream = outStr;
+
     }
 
-    public BasicHttpResponse getResponse() {
+    public Response getResponse() {
         return this.response;
     }
 
     public void prepareResponse() {
-        int code = 500;
-        try {
-            code = this.request.parseRequest();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-        ProtocolVersion httpVerStr = this.request.getProtocolVersion();
-        String reason = EnglishReasonPhraseCatalog.INSTANCE.getReason(code, Locale.US);
-        this.response = new BasicHttpResponse(httpVerStr, code, reason);
+        Integer code = requestHnd.getParsingCode();
+        ProtocolVersion httpVerStr = this.requestHnd.getProtocolVersion();
+        this.response = new Response(httpVerStr, code);
         SetCommonHeaders();
-        if (this.request.getMethod().equals("GET")) {
-            prepareGet();
-        } else if (this.request.getMethod().equals("POST")) {
-            preparePost();
-        } else if (this.request.getMethod().equals("PUT")) {
-            preparePut();
-        } else if (this.request.getMethod().equals("DELETE")) {
-            prepareDelete();
+        if (this.requestHnd.getMethod().equals(METHOD_GET)) {
+            prepareGetPart();
+        } else if (this.requestHnd.getMethod().equals(METHOD_POST)) {
+            preparePostPart();
+        } else if (this.requestHnd.getMethod().equals(METHOD_PUT)) {
+            preparePutPart();
+        } else if (this.requestHnd.getMethod().equals(METHOD_DELETE)) {
+            prepareDeletePart();
         }
 
     }
 
     private void SetCommonHeaders() {
-        this.response.addHeader(RequestHandler.getDateHeader());
-        this.response.addHeader("Content-Encoding","gzip");
-        this.response.addHeader("Content-Language","en");
-        this.response.addHeader("Connection","Closed");
+        this.response.setDate(DateHelper.getDateStr());
+        this.response.setServer(SERVER_STR);
+        this.response.setContentEncoding("gzip");
+        this.response.setContentLanguage("en");
+        this.response.setConnection("Closed");
     }
 
-    private void prepareGet() {
-        this.response.addHeader("Content-Type","application/json");
-        if (this.request.getParams().size() == 0) {
-
+    private void prepareGetPart() {
+        if (this.response.getStatusCode()== 200) {
+            this.response.setContentType(CONTENT_TYPE_JSON);
+            if (this.requestHnd.getParams() == null) {
+                this.response.setBody(JSONArray.toJSONString(BookShelf.getBook()));
+            }
+            this.response.setContentLength(String.valueOf(response.getBody().length()));
+        } else {
+            prepareErrorResponsePart();
         }
-
-        this.response.addHeader("Content-Length", );
     }
 
-    private void preparePost() {
+    private void prepareErrorResponsePart() {
+        this.response.setContentType(CONTENT_TYPE_HTML);
+        this.response.setBody(String.format(RESPONSE_STR, this.response.getStatusCode()));
+        this.response.setContentLength(String.valueOf(response.getBody().length()));
+    }
+
+    private void preparePostPart() {
 
     }
-    private void preparePut() {
+    private void preparePutPart() {
 
     }
 
-    private void prepareDelete() {
+    private void prepareDeletePart() {
 
     }
+
+    public void writeResponse() throws IOException {
+        StringBuilder responseStr = new StringBuilder();
+        responseStr.append(response.getStatusLine());
+        responseStr.append(LINE_SEPARATOR);
+        for (HashMap.Entry<String, String> record: response.getHeaders().entrySet()) {
+            responseStr.append(record.getKey()).append(COLON_SPACE).append(record.getValue()).append(LINE_SEPARATOR);
+        }
+        responseStr.append(LINE_SEPARATOR).append(response.getBody());
+        this.outputStream.write(responseStr.toString().getBytes());
+    }
+
+
 }

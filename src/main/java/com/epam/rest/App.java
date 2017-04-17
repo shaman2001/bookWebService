@@ -13,10 +13,6 @@ public class App {
 
     private static final Logger LOG = LogManager.getLogger(App.class);
 
-//    long currentId = 123;
-//    Map<Long, Book> customers = new HashMap<>();
-
-
     public static void main(String args[] ) throws IOException {
         final Integer PORT = Integer.parseInt(PropertyLoader.getProperty("server.port"));
         ServerSocket server = null;
@@ -27,7 +23,6 @@ public class App {
             LOG.error("Port" + PORT + "is blocked");
             System.exit(-1);
         }
-        BookShelf bookShelf = new BookShelf();
         while (true) {
             try {
                 Socket clientSocket = server.accept();
