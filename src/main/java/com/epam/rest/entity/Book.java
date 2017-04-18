@@ -3,7 +3,6 @@ package com.epam.rest.entity;
 import org.json.simple.JSONObject;
 
 
-//@XmlRootElement(name = "Book")
 public class Book {
     private Integer id;
     private String name;

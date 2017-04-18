@@ -30,7 +30,7 @@ public class RequestHandler {
         method = "";
         url = "";
         headers = new HashMap<>();
-        params = null;
+        params = new HashMap<>();
         httpVer = new int[2];
     }
 
@@ -82,7 +82,7 @@ public class RequestHandler {
 
     private void parseUrlParams(String prmStr) throws IOException {
         String paramLines[] = prmStr.split(AMPERSAND_SIGN);
-        this.params = new HashMap<>();
+//        this.params = new HashMap<>();
         for (String str: paramLines) {
             String tempArr[] = str.split(EQUAL_SIGN);
             if (tempArr.length == 2) {

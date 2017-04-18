@@ -91,9 +91,7 @@ public class ResponseHandler {
 
     private void prepareGetPart() {
         this.response.setContentType(CONTENT_TYPE_JSON);
-        if (this.requestHnd.getParams() == null) {
-            this.response.setBody(JSONArray.toJSONString(selectBooks));
-        }
+        this.response.setBody(JSONArray.toJSONString(selectBooks));
         this.response.setContentLength(String.valueOf(response.getBody().length()));
     }
 

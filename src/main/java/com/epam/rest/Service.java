@@ -4,6 +4,7 @@ package com.epam.rest;
 import com.epam.rest.entity.Book;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import static com.epam.rest.constants.CommonConstants.*;
 
@@ -28,11 +29,11 @@ public class Service {
     }
 
     public void processData () {
-        Integer id;
         if (rqstHnd.getParsingCode() == 200) {
             switch (rqstHnd.getMethod()) {
                 case METHOD_GET:
-                    respHnd.setSelectBooks(BookShelf.getBook());
+                    HashMap query = rqstHnd.getParams();
+                    respHnd.setSelectBooks(BookShelf.getBook(query));
                     respHnd.setProcResult(true);
                     break;
                 case METHOD_DELETE:

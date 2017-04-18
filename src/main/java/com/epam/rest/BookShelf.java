@@ -2,10 +2,8 @@ package com.epam.rest;
 
 import com.epam.rest.entity.Book;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.TreeSet;
+import java.util.*;
+import static com.epam.rest.constants.CommonConstants.*;
 
 public class BookShelf {
 
@@ -44,6 +42,32 @@ public class BookShelf {
             if (book.getId().equals(id)) {
                 return new ArrayList<>(Collections.singletonList(book));
             }
+        }
+        return null;
+    }
+
+    public static ArrayList<Book> getBook(HashMap query) {
+        if (query.size() == 0) {
+            return new ArrayList<>(bookList);
+        } else if (query.get(PARAM_ID)!= null) {
+            Integer id = Integer.parseInt((String)query.get(PARAM_ID));
+            for(Book book: bookList) {
+                if (book.getId().equals(id)) {
+                    return new ArrayList<>(Collections.singletonList(book));
+                }
+            }
+        } else {
+            ArrayList<Book> result = new ArrayList<>();
+            for (Book book: bookList) {
+                if (query.get(PARAM_NAME) != null && query.get(PARAM_NAME).equals(book.getName())
+                        || query.get(PARAM_GENRE) != null && query.get(PARAM_GENRE).equals(book.getGenre())
+                        || query.get(PARAM_AUTHOR)!= null && query.get(PARAM_AUTHOR).equals(book.getAuthor())
+                        || query.get(PARAM_Y_OF_ISSUE) != null && Integer.parseInt((String)query.get(PARAM_Y_OF_ISSUE)) == book.getYearOfIssue()
+                        || query.get(PARAM_LINK) != null && query.get(PARAM_LINK).equals(book.getLocalLink())) {
+                    result.add(book);
+                }
+            }
+            return result.size()!=0 ? result : null;
         }
         return null;
     }
