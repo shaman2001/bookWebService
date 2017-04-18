@@ -33,8 +33,6 @@ public class ResponseHandler {
         this.procResult = procResult;
     }
 
-
-
     public ResponseHandler (RequestHandler rqst, OutputStream outStr) {
         this.requestHnd = rqst;
         this.outputStream = outStr;
@@ -58,15 +56,23 @@ public class ResponseHandler {
             prepareErrorResponsePart();
             return;
         }
-        if (this.requestHnd.getMethod().equals(METHOD_GET)) {
-            prepareGetPart();
-        } else if (this.requestHnd.getMethod().equals(METHOD_POST)) {
-            preparePostPart();
-        } else if (this.requestHnd.getMethod().equals(METHOD_PUT)) {
-            preparePutPart();
-        } else if (this.requestHnd.getMethod().equals(METHOD_DELETE)) {
-            prepareDeletePart();
+        switch (this.requestHnd.getMethod()) {
+            case METHOD_GET:
+                prepareGetPart();
+                break;
+            case METHOD_POST:
+                preparePostPart();
+                break;
+            case METHOD_PUT:
+                preparePutPart();
+                break;
+            case METHOD_DELETE:
+                prepareDeletePart();
+                break;
+            default:
+                prepareGetPart();
         }
+        this.response.setConnection("Closed");
 
     }
 
@@ -75,7 +81,6 @@ public class ResponseHandler {
         this.response.setServer(SERVER_STR);
         this.response.setContentEncoding("gzip");
         this.response.setContentLanguage("en");
-        this.response.setConnection("Closed");
     }
 
     private void prepareErrorResponsePart() {
@@ -96,12 +101,16 @@ public class ResponseHandler {
 
     }
     private void preparePutPart() {
+        this.response.setContentType(CONTENT_TYPE_HTML);
+        this.response.setBody(PUT_RESPONSE_HTML);
+        this.response.setContentLength(String.valueOf(response.getBody().length()));
 
     }
 
     private void prepareDeletePart() {
-
-
+        this.response.setContentType(CONTENT_TYPE_HTML);
+        this.response.setBody(DELETE_RESPONSE_HTML);
+        this.response.setContentLength(String.valueOf(response.getBody().length()));
     }
 
     public void writeResponse() throws IOException {

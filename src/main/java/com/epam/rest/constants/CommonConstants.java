@@ -2,7 +2,7 @@ package com.epam.rest.constants;
 
 public final class CommonConstants {
 
-    public static final String SERVER = "server";
+    public static final String SERVER = "Server";
     public static final String SERVER_STR = "BookWebService/0.0.1_beta_1";
 
     public static final String CONTENT_TYPE = "Content-Type";
@@ -22,7 +22,7 @@ public final class CommonConstants {
     public static final String LINE_SEPARATOR = System.lineSeparator();
     public static final String POINT_SIGN = ".";
     public static final String QUESTION_SIGN = "?";
-    public static final String PROTOCOL_NAME = "HTTP/";
+    public static final String PROTOCOL_NAME = "HTTP";
 
 
     public static final String METHOD_GET = "GET";
@@ -39,8 +39,8 @@ public final class CommonConstants {
 
     public final static String ERROR_RESPONSE_HTML = "<html><body><h1>UUUUpppppsssss! Error: %d </h1></body></html>";
     public final static String DELETE_RESPONSE_HTML = "<html><body><h1>The book was deleted successfully</h1></body></html>";
-    public final static String POST_RESPONSE_HTML = "<html><body><h1>The book was added successfully</h1></body></html>";
-    public final static String PUT_RESPONSE_HTML = "<html><body><h1>The book was updated successfully</h1></body></html>";
+    public final static String PUT_RESPONSE_HTML = "<html><body><h1>The book was added successfully</h1></body></html>";
+    public final static String POST_RESPONSE_HTML = "<html><body><h1>The book was updated successfully</h1></body></html>";
 
 
 }
