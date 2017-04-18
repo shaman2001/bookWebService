@@ -13,14 +13,11 @@ public class Service {
 
     private RequestHandler rqstHnd;
     private ResponseHandler respHnd;
-    private ArrayList<Book> selectBooks;
-    private boolean procResult;
 
 
     public Service(RequestHandler rqstHnd, ResponseHandler respHnd) {
         this.rqstHnd = rqstHnd;
         this.respHnd = respHnd;
-        this.selectBooks = new ArrayList<>();
     }
 
     public void getRequest () {
@@ -36,11 +33,12 @@ public class Service {
         if (rqstHnd.getParsingCode() == 200) {
             switch (rqstHnd.getMethod()) {
                 case METHOD_GET:
-                    selectBooks = BookShelf.getBook();
+                    respHnd.setSelectBooks(BookShelf.getBook());
+                    respHnd.setProcResult(true);
                     break;
                 case METHOD_DELETE:
                     if (rqstHnd.getParams()!= null)
-                        procResult = BookShelf.delBook(Integer.parseInt(rqstHnd.getParam(PARAM_ID)));
+                        respHnd.setProcResult(BookShelf.delBook(Integer.parseInt(rqstHnd.getParam(PARAM_ID))));
                     break;
                 case METHOD_POST:
                     if (rqstHnd.getParams() != null) {
@@ -50,10 +48,11 @@ public class Service {
                                 .setGenre(rqstHnd.getParam(PARAM_GENRE))
                                 .setYearOfIssue(Integer.parseInt(rqstHnd.getParam(PARAM_Y_OF_ISSUE)))
                                 .setLocalLink(rqstHnd.getParam(PARAM_LINK)).build();
-                        procResult = BookShelf.addBook(newBook);
+                        respHnd.setProcResult(BookShelf.addBook(newBook));
                     }
                 default:
-                    selectBooks = BookShelf.getBook();
+                    respHnd.setSelectBooks(BookShelf.getBook());
+                    respHnd.setProcResult(true);
             }
          }
 

@@ -2,12 +2,14 @@ package com.epam.rest;
 
 import static com.epam.rest.constants.CommonConstants.*;
 
+import com.epam.rest.entity.Book;
 import com.epam.rest.helper.DateHelper;
 import org.apache.http.ProtocolVersion;
 import org.json.simple.JSONArray;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -19,11 +21,24 @@ public class ResponseHandler {
     private RequestHandler requestHnd;
     private Response response;
     private OutputStream outputStream;
+    private ArrayList<Book> selectBooks;
+    private boolean procResult;
+
+
+    public void setSelectBooks(ArrayList<Book> selectBooks) {
+        this.selectBooks = selectBooks;
+    }
+
+    public void setProcResult(boolean procResult) {
+        this.procResult = procResult;
+    }
+
 
 
     public ResponseHandler (RequestHandler rqst, OutputStream outStr) {
         this.requestHnd = rqst;
         this.outputStream = outStr;
+        this.selectBooks = new ArrayList<>();
 
     }
 
@@ -32,10 +47,17 @@ public class ResponseHandler {
     }
 
     public void prepareResponse() {
-        Integer code = requestHnd.getParsingCode();
+        Integer code = 500;
+        if (procResult) {
+            code = requestHnd.getParsingCode();
+        }
         ProtocolVersion httpVerStr = this.requestHnd.getProtocolVersion();
         this.response = new Response(httpVerStr, code);
         SetCommonHeaders();
+        if (this.response.getStatusCode() != 200) {
+            prepareErrorResponsePart();
+            return;
+        }
         if (this.requestHnd.getMethod().equals(METHOD_GET)) {
             prepareGetPart();
         } else if (this.requestHnd.getMethod().equals(METHOD_POST)) {
@@ -57,20 +79,16 @@ public class ResponseHandler {
     }
 
     private void prepareGetPart() {
-        if (this.response.getStatusCode()== 200) {
             this.response.setContentType(CONTENT_TYPE_JSON);
             if (this.requestHnd.getParams() == null) {
                 this.response.setBody(JSONArray.toJSONString(BookShelf.getBook()));
             }
             this.response.setContentLength(String.valueOf(response.getBody().length()));
-        } else {
-            prepareErrorResponsePart();
-        }
     }
 
     private void prepareErrorResponsePart() {
         this.response.setContentType(CONTENT_TYPE_HTML);
-        this.response.setBody(String.format(RESPONSE_STR, this.response.getStatusCode()));
+        this.response.setBody(String.format(ERROR_RESPONSE_STR, this.response.getStatusCode()));
         this.response.setContentLength(String.valueOf(response.getBody().length()));
     }
 

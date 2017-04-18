@@ -37,5 +37,5 @@ public final class CommonConstants {
     public static final String PARAM_LINK = "link";
     public static final String PARAM_Y_OF_ISSUE = "year_of_issue";
 
-    public final static String RESPONSE_STR = "<html><body><h1>UUUUpppppsssss! Error: %d </h1></body></html>";
+    public final static String ERROR_RESPONSE_STR = "<html><body><h1>UUUUpppppsssss! Error: %d </h1></body></html>";
 }
