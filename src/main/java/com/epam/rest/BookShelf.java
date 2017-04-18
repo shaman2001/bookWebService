@@ -84,8 +84,13 @@ public class BookShelf {
         return false;
     }
 
-    public static boolean delBook(Book book) {
-        return bookList.remove(book);
+    public static boolean delBook(Integer id) {
+        for(Book book: bookList) {
+            if (book.getId().equals(id)) {
+                return bookList.remove(book);
+            }
+        }
+        return false;
     }
 
     //newBookData should contain an id of updating book
