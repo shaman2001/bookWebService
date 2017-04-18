@@ -121,6 +121,7 @@ public class ResponseHandler {
             responseStr.append(record.getKey()).append(COLON_SPACE).append(record.getValue()).append(LINE_SEPARATOR);
         }
         responseStr.append(LINE_SEPARATOR).append(response.getBody());
+        System.out.print(responseStr);
         this.outputStream.write(responseStr.toString().getBytes());
     }
 

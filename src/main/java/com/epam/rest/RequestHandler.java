@@ -148,7 +148,7 @@ public class RequestHandler {
     }
 
     public ProtocolVersion getProtocolVersion() {
-        return new ProtocolVersion("HTTP/", this.httpVer[0], this.httpVer[1]);
+        return new ProtocolVersion(PROTOCOL_NAME, this.httpVer[0], this.httpVer[1]);
     }
 
 
