@@ -37,5 +37,10 @@ public final class CommonConstants {
     public static final String PARAM_LINK = "link";
     public static final String PARAM_Y_OF_ISSUE = "year_of_issue";
 
-    public final static String ERROR_RESPONSE_STR = "<html><body><h1>UUUUpppppsssss! Error: %d </h1></body></html>";
+    public final static String ERROR_RESPONSE_HTML = "<html><body><h1>UUUUpppppsssss! Error: %d </h1></body></html>";
+    public final static String DELETE_RESPONSE_HTML = "<html><body><h1>The book was deleted successfully</h1></body></html>";
+    public final static String POST_RESPONSE_HTML = "<html><body><h1>The book was added successfully</h1></body></html>";
+    public final static String PUT_RESPONSE_HTML = "<html><body><h1>The book was updated successfully</h1></body></html>";
+
+
 }

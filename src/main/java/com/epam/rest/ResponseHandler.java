@@ -78,17 +78,17 @@ public class ResponseHandler {
         this.response.setConnection("Closed");
     }
 
-    private void prepareGetPart() {
-            this.response.setContentType(CONTENT_TYPE_JSON);
-            if (this.requestHnd.getParams() == null) {
-                this.response.setBody(JSONArray.toJSONString(BookShelf.getBook()));
-            }
-            this.response.setContentLength(String.valueOf(response.getBody().length()));
-    }
-
     private void prepareErrorResponsePart() {
         this.response.setContentType(CONTENT_TYPE_HTML);
-        this.response.setBody(String.format(ERROR_RESPONSE_STR, this.response.getStatusCode()));
+        this.response.setBody(String.format(ERROR_RESPONSE_HTML, this.response.getStatusCode()));
+        this.response.setContentLength(String.valueOf(response.getBody().length()));
+    }
+
+    private void prepareGetPart() {
+        this.response.setContentType(CONTENT_TYPE_JSON);
+        if (this.requestHnd.getParams() == null) {
+            this.response.setBody(JSONArray.toJSONString(selectBooks));
+        }
         this.response.setContentLength(String.valueOf(response.getBody().length()));
     }
 
@@ -100,6 +100,7 @@ public class ResponseHandler {
     }
 
     private void prepareDeletePart() {
+
 
     }
 

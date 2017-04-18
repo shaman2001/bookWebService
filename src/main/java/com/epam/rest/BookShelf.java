@@ -29,13 +29,6 @@ public class BookShelf {
                 setGenre("esseys").setAuthor("Plutarch").setYearOfIssue(1531)
                 .setLocalLink(FTP_BASE_ADDRESS + "morals.txt").build());
 
-        /*bookList.add(new Book(1, "Burning daylight", "novel", "Jack London",
-                            1990, FTP_BASE_ADDRESS + "burning_daylight.txt"));
-        bookList.add(new Book(2, "For whom the bell tolls", "novel", "Ernest Hemingway",
-                            2003, FTP_BASE_ADDRESS + "for_whom_the_bell_tolls.txt"));
-        bookList.add(new Book(3, "The Master and Margarita", "novel", "Mikhail Bulgakov",
-                            1995, FTP_BASE_ADDRESS + "the_master_and_margarita.txt"));*/
-
     }
 
     public static boolean loadBooksFromJson() {

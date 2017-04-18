@@ -4,7 +4,6 @@ package com.epam.rest;
 import com.epam.rest.entity.Book;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static com.epam.rest.constants.CommonConstants.*;
 
@@ -37,9 +36,11 @@ public class Service {
                     respHnd.setProcResult(true);
                     break;
                 case METHOD_DELETE:
-                    if (rqstHnd.getParams()!= null)
+                    if (rqstHnd.getParams()!= null) {
                         respHnd.setProcResult(BookShelf.delBook(Integer.parseInt(rqstHnd.getParam(PARAM_ID))));
-                    break;
+                    } else {
+                        respHnd.setProcResult(false);
+                    }
                 case METHOD_POST:
                     if (rqstHnd.getParams() != null) {
                         Book newBook = new Book.BookBuilder(Integer.parseInt(rqstHnd.getParam(PARAM_ID)),
@@ -49,7 +50,10 @@ public class Service {
                                 .setYearOfIssue(Integer.parseInt(rqstHnd.getParam(PARAM_Y_OF_ISSUE)))
                                 .setLocalLink(rqstHnd.getParam(PARAM_LINK)).build();
                         respHnd.setProcResult(BookShelf.addBook(newBook));
+                    } else {
+                        respHnd.setProcResult(false);
                     }
+                    break;
                 default:
                     respHnd.setSelectBooks(BookShelf.getBook());
                     respHnd.setProcResult(true);
