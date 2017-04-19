@@ -1,4 +1,4 @@
-package com.epam.rest;
+package com.epam.rest.entity;
 
 import com.epam.rest.entity.Book;
 
@@ -59,11 +59,11 @@ public class BookShelf {
         } else {
             ArrayList<Book> result = new ArrayList<>();
             for (Book book: bookList) {
-                if (query.get(PARAM_NAME) != null && query.get(PARAM_NAME).equals(book.getName())
-                        || query.get(PARAM_GENRE) != null && query.get(PARAM_GENRE).equals(book.getGenre())
-                        || query.get(PARAM_AUTHOR)!= null && query.get(PARAM_AUTHOR).equals(book.getAuthor())
-                        || query.get(PARAM_Y_OF_ISSUE) != null && Integer.parseInt((String)query.get(PARAM_Y_OF_ISSUE)) == book.getYearOfIssue()
-                        || query.get(PARAM_LINK) != null && query.get(PARAM_LINK).equals(book.getLocalLink())) {
+                if ((query.get(PARAM_NAME) != null && query.get(PARAM_NAME).equals(book.getName()))
+                        || (query.get(PARAM_GENRE) != null && query.get(PARAM_GENRE).equals(book.getGenre()))
+                        || (query.get(PARAM_AUTHOR)!= null && query.get(PARAM_AUTHOR).equals(book.getAuthor()))
+                        || (query.get(PARAM_Y_OF_ISSUE) != null && Integer.parseInt((String)query.get(PARAM_Y_OF_ISSUE)) == book.getYearOfIssue())
+                        || (query.get(PARAM_LINK) != null && query.get(PARAM_LINK).equals(book.getLocalLink()))) {
                     result.add(book);
                 }
             }

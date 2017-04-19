@@ -1,4 +1,4 @@
-package com.epam.rest;
+package com.epam.rest.entity;
 
 import org.apache.http.Header;
 import org.apache.http.ProtocolVersion;

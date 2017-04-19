@@ -1,11 +1,13 @@
-package com.epam.rest;
+package com.epam.rest.handler;
 
 //import com.sun.deploy.net.BasicHttpRequest;
 //import com.sun.deploy.net.HttpRequest;
 import org.apache.http.ProtocolVersion;
+import sun.nio.cs.ISO_8859_2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.*;
 
 import static com.epam.rest.constants.CommonConstants.*;
@@ -38,6 +40,7 @@ public class RequestHandler {
 
         parsingCode = 200; // return OK by default
         String initialLine = reader.readLine();
+        System.out.println(initialLine); //************************************
         if (initialLine == null || initialLine.length() == 0) {
             parsingCode = 0;
             return;
@@ -53,7 +56,7 @@ public class RequestHandler {
             return;
         }
 
-        if (cmd[2].indexOf(PROTOCOL_NAME) == 0 && cmd[2].indexOf(POINT_SIGN) > 5) {
+        if (cmd[2].indexOf(PROTOCOL_HTTP) == 0 && cmd[2].indexOf(POINT_SIGN) > 5) {
             String tempArr[] = cmd[2].substring(5).split("\\.");
             try {
                 httpVer[0] = Integer.parseInt(tempArr[0]);
@@ -68,7 +71,7 @@ public class RequestHandler {
         Integer index = cmd[1].indexOf(QUESTION_SIGN);
         if (index < 0) url = cmd[1];
         else {
-            url = cmd[1].substring(0, index);
+            url = URLDecoder.decode(cmd[1].substring(0, index), ISO_8859_1);
             parseUrlParams(cmd[1].substring(index+1));
         }
         parseHeaders();
@@ -81,7 +84,7 @@ public class RequestHandler {
     }
 
     private void parseUrlParams(String prmStr) throws IOException {
-        String paramLines[] = prmStr.split(AMPERSAND_SIGN);
+        String paramLines[] = URLDecoder.decode(prmStr, ISO_8859_1).split(AMPERSAND_SIGN);
 //        this.params = new HashMap<>();
         for (String str: paramLines) {
             String tempArr[] = str.split(EQUAL_SIGN);
@@ -98,6 +101,7 @@ public class RequestHandler {
         String line;
         int index;
         line = reader.readLine();
+        System.out.println(line);//*************************************
         while (!line.isEmpty()) {
             index = line.indexOf(COLON_SIGN);
             if (index < 0) {
@@ -110,6 +114,7 @@ public class RequestHandler {
 //                headers.put(line.substring(0, index).toLowerCase(), line.substring(index+1).trim());
             }
             line = reader.readLine();
+            System.out.println(line);//***********************************************
         }
     }
 
@@ -148,7 +153,7 @@ public class RequestHandler {
     }
 
     public ProtocolVersion getProtocolVersion() {
-        return new ProtocolVersion(PROTOCOL_NAME, this.httpVer[0], this.httpVer[1]);
+        return new ProtocolVersion(PROTOCOL_HTTP, this.httpVer[0], this.httpVer[1]);
     }
 
 

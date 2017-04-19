@@ -1,9 +1,7 @@
-package com.epam.rest;
+package com.epam.rest.handler;
 
-import com.sun.net.httpserver.HttpServer;
 import java.io.*;
 import java.net.Socket;
-import java.util.Date;
 
 public class SocketHandler implements Runnable {
 
@@ -12,7 +10,6 @@ public class SocketHandler implements Runnable {
     private OutputStream outStr;
     private InputStream inStr;
 
-    private final static String RESPONSE_STR = "<html><body><h1>UUUUpppppsssss! Error:</h1></body></html>";
     private static final String DEFAULT_FILES_DIR = "/www";
 
     public SocketHandler (Socket socket) throws IOException {
@@ -26,10 +23,10 @@ public class SocketHandler implements Runnable {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inStr));
             RequestHandler request = new RequestHandler(reader);
             ResponseHandler response = new ResponseHandler(request, this.outStr);
-            Service service = new Service(request, response);
-            service.getRequest();
-            service.processData();
-            service.sendResponse();
+            ServiceHandler serviceHandler = new ServiceHandler(request, response);
+            serviceHandler.getRequest();
+            serviceHandler.processData();
+            serviceHandler.sendResponse();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         } finally {
@@ -53,7 +50,7 @@ public class SocketHandler implements Runnable {
             if (ln == null || ln.isEmpty()) {
                 break;
             }
-            builder.append(ln + System.getProperty("line.separator"));
+            builder.append(ln).append(System.getProperty("line.separator"));
         }
         return builder.toString();
     }

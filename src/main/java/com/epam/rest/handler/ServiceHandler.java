@@ -1,21 +1,22 @@
-package com.epam.rest;
+package com.epam.rest.handler;
 
 
 import com.epam.rest.entity.Book;
+import com.epam.rest.entity.BookShelf;
+import com.epam.rest.handler.RequestHandler;
+import com.epam.rest.handler.ResponseHandler;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 import static com.epam.rest.constants.CommonConstants.*;
 
-public class Service {
-
+public class ServiceHandler {
 
     private RequestHandler rqstHnd;
     private ResponseHandler respHnd;
 
-
-    public Service(RequestHandler rqstHnd, ResponseHandler respHnd) {
+    public ServiceHandler(RequestHandler rqstHnd, ResponseHandler respHnd) {
         this.rqstHnd = rqstHnd;
         this.respHnd = respHnd;
     }
@@ -37,12 +38,12 @@ public class Service {
                     respHnd.setProcResult(true);
                     break;
                 case METHOD_DELETE:
-                    if (rqstHnd.getParams()!= null) {
+                    if (rqstHnd.getParams()!= null && Integer.parseInt(rqstHnd.getParam(PARAM_ID)) > 0) {
                         respHnd.setProcResult(BookShelf.delBook(Integer.parseInt(rqstHnd.getParam(PARAM_ID))));
                     } else {
                         respHnd.setProcResult(false);
                     }
-                case METHOD_POST:
+                case METHOD_PUT:
                     if (rqstHnd.getParams() != null) {
                         Book newBook = new Book.BookBuilder(Integer.parseInt(rqstHnd.getParam(PARAM_ID)),
                                 rqstHnd.getParam(PARAM_NAME))

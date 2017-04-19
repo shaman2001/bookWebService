@@ -1,5 +1,6 @@
 package com.epam.rest;
 
+import com.epam.rest.handler.SocketHandler;
 import com.epam.rest.helper.PropertyLoader;
 
 import org.apache.logging.log4j.Logger;

@@ -1,8 +1,10 @@
-package com.epam.rest;
+package com.epam.rest.handler;
 
 import static com.epam.rest.constants.CommonConstants.*;
 
 import com.epam.rest.entity.Book;
+import com.epam.rest.entity.Response;
+import com.epam.rest.handler.RequestHandler;
 import com.epam.rest.helper.DateHelper;
 import org.apache.http.ProtocolVersion;
 import org.json.simple.JSONArray;
@@ -119,7 +121,7 @@ public class ResponseHandler {
             responseStr.append(record.getKey()).append(COLON_SPACE).append(record.getValue()).append(LINE_SEPARATOR);
         }
         responseStr.append(LINE_SEPARATOR).append(response.getBody());
-        System.out.print(responseStr);
+        System.out.println(responseStr);
         this.outputStream.write(responseStr.toString().getBytes());
     }
 
