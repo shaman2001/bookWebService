@@ -23,14 +23,15 @@ public class BookShelf {
         bookList.add(new Book.BookBuilder(4, "Borodino").
                 setGenre("poem").setAuthor("Mikhail Lermontov").setYearOfIssue(1960)
                 .setLocalLink(FTP_BASE_ADDRESS + "borodino.txt").build());
-        bookList.add(new Book.BookBuilder(4, "Morals").
+        bookList.add(new Book.BookBuilder(5, "Morals").
                 setGenre("esseys").setAuthor("Plutarch").setYearOfIssue(1531)
                 .setLocalLink(FTP_BASE_ADDRESS + "morals.txt").build());
 
     }
 
     public static boolean loadBooksFromJson() {
-        return true;
+        //NOT REALIZED YET
+        return false;
     }
 
     public static ArrayList<Book> getBook() {

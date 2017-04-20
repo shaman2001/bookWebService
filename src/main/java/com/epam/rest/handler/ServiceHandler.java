@@ -43,6 +43,7 @@ public class ServiceHandler {
                     } else {
                         respHnd.setProcResult(false);
                     }
+                    break;
                 case METHOD_PUT:
                     if (rqstHnd.getParams() != null) {
                         Book newBook = new Book.BookBuilder(Integer.parseInt(rqstHnd.getParam(PARAM_ID)),

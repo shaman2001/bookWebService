@@ -3,8 +3,8 @@ package com.epam.rest.handler;
 import static com.epam.rest.constants.CommonConstants.*;
 
 import com.epam.rest.entity.Book;
+import com.epam.rest.entity.BookShelf;
 import com.epam.rest.entity.Response;
-import com.epam.rest.handler.RequestHandler;
 import com.epam.rest.helper.DateHelper;
 import org.apache.http.ProtocolVersion;
 import org.json.simple.JSONArray;
@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -81,7 +82,7 @@ public class ResponseHandler {
     private void SetCommonHeaders() {
         this.response.setDate(DateHelper.getDateStr());
         this.response.setServer(SERVER_STR);
-        this.response.setContentEncoding("gzip");
+        //this.response.setContentEncoding("gzip"); //falls all the responses. for checking
         this.response.setContentLanguage("en");
     }
 
@@ -94,6 +95,7 @@ public class ResponseHandler {
     private void prepareGetPart() {
         this.response.setContentType(CONTENT_TYPE_JSON);
         this.response.setBody(JSONArray.toJSONString(selectBooks));
+        this.response.setBody(JSONArray.toJSONString(BookShelf.getBook()));
         this.response.setContentLength(String.valueOf(response.getBody().length()));
     }
 
@@ -115,14 +117,26 @@ public class ResponseHandler {
 
     public void writeResponse() throws IOException {
         StringBuilder responseStr = new StringBuilder();
-        responseStr.append(response.getStatusLine());
-        responseStr.append(LINE_SEPARATOR);
+        responseStr.append(response.getStatusLine()).append(LINE_SEPARATOR);
         for (HashMap.Entry<String, String> record: response.getHeaders().entrySet()) {
             responseStr.append(record.getKey()).append(COLON_SPACE).append(record.getValue()).append(LINE_SEPARATOR);
         }
-        responseStr.append(LINE_SEPARATOR).append(response.getBody());
+        responseStr.append(LINE_SEPARATOR);
+        //responseStr.append(response.getBody());
         System.out.println(responseStr);
-        this.outputStream.write(responseStr.toString().getBytes());
+/*        String lineSep = System.lineSeparator();
+        StringBuilder responseStr = new StringBuilder();
+        responseStr.append(response.getStatusLine()).append(LINE_SEPARATOR);
+        responseStr.append(DATE_STR).append(COLON_SPACE).append(response.getDate()).append(LINE_SEPARATOR);
+        responseStr.append(CONTENT_TYPE).append(COLON_SPACE).append(response.getContentType()).append(LINE_SEPARATOR);
+        responseStr.append(LINE_SEPARATOR);*/
+
+        responseStr.append(response.getBody());
+
+
+        this.outputStream.write(responseStr.toString().getBytes()); //check for error this place
+        this.outputStream.flush();
+//        this.outputStream.close();
     }
 
 
