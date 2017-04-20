@@ -95,7 +95,7 @@ public class ResponseHandler {
     private void prepareGetPart() {
         this.response.setContentType(CONTENT_TYPE_JSON);
         this.response.setBody(JSONArray.toJSONString(selectBooks));
-        this.response.setBody(JSONArray.toJSONString(BookShelf.getBook()));
+//        this.response.setBody(JSONArray.toJSONString(BookShelf.getBook()));
         this.response.setContentLength(String.valueOf(response.getBody().length()));
     }
 
@@ -116,25 +116,17 @@ public class ResponseHandler {
     }
 
     public void writeResponse() throws IOException {
-        StringBuilder responseStr = new StringBuilder();
+        StringBuffer responseStr = new StringBuffer();
         responseStr.append(response.getStatusLine()).append(LINE_SEPARATOR);
         for (HashMap.Entry<String, String> record: response.getHeaders().entrySet()) {
             responseStr.append(record.getKey()).append(COLON_SPACE).append(record.getValue()).append(LINE_SEPARATOR);
         }
         responseStr.append(LINE_SEPARATOR);
-        //responseStr.append(response.getBody());
         System.out.println(responseStr);
-/*        String lineSep = System.lineSeparator();
-        StringBuilder responseStr = new StringBuilder();
-        responseStr.append(response.getStatusLine()).append(LINE_SEPARATOR);
-        responseStr.append(DATE_STR).append(COLON_SPACE).append(response.getDate()).append(LINE_SEPARATOR);
-        responseStr.append(CONTENT_TYPE).append(COLON_SPACE).append(response.getContentType()).append(LINE_SEPARATOR);
-        responseStr.append(LINE_SEPARATOR);*/
 
         responseStr.append(response.getBody());
 
-
-        this.outputStream.write(responseStr.toString().getBytes()); //check for error this place
+        this.outputStream.write(responseStr.toString().getBytes());
         this.outputStream.flush();
 //        this.outputStream.close();
     }

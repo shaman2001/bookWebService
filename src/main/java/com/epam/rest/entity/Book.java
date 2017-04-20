@@ -95,6 +95,10 @@ public class Book {
         public BookBuilder (Integer b_id, String b_name) {
             this.id = b_id;
             this.name = b_name;
+            this.genre = "";
+            this.author = "";
+            this.yearOfIssue = 0;
+            this.localLink = "";
         }
 
         public BookBuilder setGenre (String val) {
@@ -134,19 +138,19 @@ public class Book {
     }
 
     public String toString() {
-        StringBuilder builder = new StringBuilder("Book id:");
-        builder.append(this.getId().toString());
-        builder.append("; Name: ");
-        builder.append(this.getName());
-        builder.append("; Author: ");
-        builder.append(this.getAuthor());
-        builder.append("; Genre: ");
-        builder.append(this.getGenre());
-        builder.append("; Year: ");
-        builder.append(this.getYearOfIssue().toString());
-        builder.append("; link: ");
-        builder.append(this.getLocalLink());
-        return builder.toString();
+        StringBuffer result = new StringBuffer("Book id:");
+        result.append(this.getId().toString());
+        result.append("; Name: ");
+        result.append(this.getName());
+        result.append("; Author: ");
+        result.append(this.getAuthor());
+        result.append("; Genre: ");
+        result.append(this.getGenre());
+        result.append("; Year: ");
+        result.append(this.getYearOfIssue().toString());
+        result.append("; link: ");
+        result.append(this.getLocalLink());
+        return result.toString();
     }
 
     @Override

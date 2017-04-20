@@ -34,6 +34,7 @@ public class BookShelf {
         return false;
     }
 
+    @Deprecated
     public static ArrayList<Book> getBook() {
         return new ArrayList<>(bookList);
     }
@@ -73,6 +74,7 @@ public class BookShelf {
         return null;
     }
 
+    @Deprecated
     public static ArrayList<Book> getBook(Book prms) {
         if (prms.getId()!=0) {
             for(Book book: bookList) {
@@ -95,14 +97,14 @@ public class BookShelf {
         return result.size()!=0 ? result : null;
     }
 
-    public static boolean addBook(Book book) {
+    public synchronized static boolean addBook(Book book) {
         if (book.getId() > 0) {
             return bookList.add(book);
         }
         return false;
     }
 
-    public static boolean delBook(Integer id) {
+    public synchronized static boolean delBook(Integer id)  {
         for(Book book: bookList) {
             if (book.getId().equals(id)) {
                 return bookList.remove(book);
@@ -112,7 +114,7 @@ public class BookShelf {
     }
 
     //newBookData should contain an id of updating book
-    public static boolean updateBookData(Book newBookData) {
+    public synchronized static boolean updateBookData(Book newBookData) {
         if (newBookData.getId() > 0) {
             for(Book book: bookList) {
                 if (book.getId().equals(newBookData.getId())) {
