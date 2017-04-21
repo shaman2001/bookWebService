@@ -2,6 +2,7 @@ package com.epam.rest.entity;
 
 import com.epam.rest.entity.Book;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import static com.epam.rest.constants.CommonConstants.*;
 
@@ -32,6 +33,18 @@ public class BookShelf {
     public static boolean loadBooksFromJson() {
         //NOT REALIZED YET
         return false;
+    }
+
+    private static boolean isBookExists(Integer id) {
+        if (getBooksCount() == 0) return false;
+        for (Book book: bookList) {
+            if (book.getId().equals(id)) return true;
+        }
+        return false;
+    }
+
+    public static Integer getBooksCount() {
+        return bookList.size();
     }
 
     @Deprecated
@@ -72,6 +85,7 @@ public class BookShelf {
             return result.size()!=0 ? result : null;
         }
         return null;
+
     }
 
     @Deprecated
@@ -95,13 +109,11 @@ public class BookShelf {
 
         }
         return result.size()!=0 ? result : null;
+
     }
 
     public synchronized static boolean addBook(Book book) {
-        if (book.getId() > 0) {
-            return bookList.add(book);
-        }
-        return false;
+        return !isBookExists(book.getId()) && bookList.add(book);
     }
 
     public synchronized static boolean delBook(Integer id)  {
