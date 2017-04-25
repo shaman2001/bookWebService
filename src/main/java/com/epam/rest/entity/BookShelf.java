@@ -1,8 +1,5 @@
 package com.epam.rest.entity;
 
-import com.epam.rest.entity.Book;
-
-import java.lang.reflect.Array;
 import java.util.*;
 import static com.epam.rest.constants.CommonConstants.*;
 
@@ -14,19 +11,19 @@ public class BookShelf {
     static {
         bookList.add(new Book.BookBuilder(1, "Burning daylight").
                 setGenre("novel").setAuthor("Jack London").setYearOfIssue(1990)
-                .setLocalLink(FTP_BASE_ADDRESS + "burning_daylight.txt").build());
+                .setLink(FTP_BASE_ADDRESS + "burning_daylight.txt").build());
         bookList.add(new Book.BookBuilder(2, "For whom the bell tolls").
                 setGenre("novel").setAuthor("Ernest Hemingway").setYearOfIssue(2003)
-                .setLocalLink(FTP_BASE_ADDRESS + "for_whom_the_bell_tolls.txt").build());
+                .setLink(FTP_BASE_ADDRESS + "for_whom_the_bell_tolls.txt").build());
         bookList.add(new Book.BookBuilder(3, "The Master and Margarita").
                 setGenre("novel").setAuthor("Mikhail Bulgakov").setYearOfIssue(1995)
-                .setLocalLink(FTP_BASE_ADDRESS + "the_master_and_margarita.txt").build());
+                .setLink(FTP_BASE_ADDRESS + "the_master_and_margarita.txt").build());
         bookList.add(new Book.BookBuilder(4, "Borodino").
                 setGenre("poem").setAuthor("Mikhail Lermontov").setYearOfIssue(1960)
-                .setLocalLink(FTP_BASE_ADDRESS + "borodino.txt").build());
+                .setLink(FTP_BASE_ADDRESS + "borodino.txt").build());
         bookList.add(new Book.BookBuilder(5, "Morals").
                 setGenre("esseys").setAuthor("Plutarch").setYearOfIssue(1531)
-                .setLocalLink(FTP_BASE_ADDRESS + "morals.txt").build());
+                .setLink(FTP_BASE_ADDRESS + "morals.txt").build());
 
     }
 
@@ -74,11 +71,7 @@ public class BookShelf {
         } else {
             ArrayList<Book> result = new ArrayList<>();
             for (Book book: bookList) {
-                if ((query.get(PARAM_NAME) != null && query.get(PARAM_NAME).equals(book.getName()))
-                        || (query.get(PARAM_GENRE) != null && query.get(PARAM_GENRE).equals(book.getGenre()))
-                        || (query.get(PARAM_AUTHOR)!= null && query.get(PARAM_AUTHOR).equals(book.getAuthor()))
-                        || (query.get(PARAM_Y_OF_ISSUE) != null && Integer.parseInt((String)query.get(PARAM_Y_OF_ISSUE)) == book.getYearOfIssue())
-                        || (query.get(PARAM_LINK) != null && query.get(PARAM_LINK).equals(book.getLocalLink()))) {
+                if (book.matches(query)) {
                     result.add(book);
                 }
             }
@@ -99,11 +92,7 @@ public class BookShelf {
         }
         ArrayList<Book> result = new ArrayList<>();
         for(Book book: bookList) {
-            if ((!prms.getName().equals("") && book.getName().equals(prms.getName()))
-                    || (!prms.getGenre().equals("") && book.getGenre().equals(prms.getGenre()))
-                    || (!prms.getAuthor().equals("") && book.getAuthor().equals(prms.getAuthor()))
-                    || (prms.getYearOfIssue()!= 0 && book.getYearOfIssue().equals(prms.getYearOfIssue()))
-                    || (!prms.getLocalLink().equals("") && book.getLocalLink().equals(prms.getLocalLink()))) {
+            if (book.matches(prms)) {
                 result.add(book);
             }
 
@@ -134,7 +123,7 @@ public class BookShelf {
                     book.setAuthor(newBookData.getAuthor());
                     book.setGenre(newBookData.getGenre());
                     book.setYearOfIssue(newBookData.getYearOfIssue());
-                    book.setLocalLink(newBookData.getLocalLink());
+                    book.setLocalLink(newBookData.getLink());
                     return true;
                 }
             }

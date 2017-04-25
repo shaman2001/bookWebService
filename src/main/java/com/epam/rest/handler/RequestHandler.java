@@ -1,9 +1,6 @@
 package com.epam.rest.handler;
 
-//import com.sun.deploy.net.BasicHttpRequest;
-//import com.sun.deploy.net.HttpRequest;
 import org.apache.http.ProtocolVersion;
-import sun.nio.cs.ISO_8859_2;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -3,8 +3,6 @@ package com.epam.rest.handler;
 
 import com.epam.rest.entity.Book;
 import com.epam.rest.entity.BookShelf;
-import com.epam.rest.handler.RequestHandler;
-import com.epam.rest.handler.ResponseHandler;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -51,7 +49,7 @@ public class ServiceHandler {
                                 .setAuthor(rqstHnd.getParam(PARAM_AUTHOR))
                                 .setGenre(rqstHnd.getParam(PARAM_GENRE))
                                 .setYearOfIssue(Integer.parseInt(rqstHnd.getParam(PARAM_Y_OF_ISSUE)))
-                                .setLocalLink(rqstHnd.getParam(PARAM_LINK)).build();
+                                .setLink(rqstHnd.getParam(PARAM_LINK)).build();
                         respHnd.setProcResult(BookShelf.addBook(newBook));
                     } else {
                         respHnd.setProcResult(false);

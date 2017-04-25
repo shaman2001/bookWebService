@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class PropertyLoader {
 
-    private static final String PROPERTIES_FILE_PATH = "src\\main\\resources\\httpserver.properties";
+    private static final String PROPERTIES_FILE_PATH = "src/main/resources/httpserver.properties";
     private static Properties prop = new Properties();
 
     static {
