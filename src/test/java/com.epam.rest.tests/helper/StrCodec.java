@@ -11,6 +11,10 @@ public class StrCodec {
                 .replaceAll(":","%3A");
     }
 
+    public static String getParamStr (String param, String val) {
+        return param + EQUAL_SIGN + val;
+    }
+
     public static String getIdQueryStr (Integer id) {
         return PARAM_ID + EQUAL_SIGN + id.toString();
     }
