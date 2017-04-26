@@ -121,8 +121,11 @@ public class ResponseHandler {
         for (HashMap.Entry<String, String> record: response.getHeaders().entrySet()) {
             responseStr.append(record.getKey()).append(COLON_SPACE).append(record.getValue()).append(LINE_SEPARATOR);
         }
-        responseStr.append(LINE_SEPARATOR).append(response.getBody());;
+        responseStr.append(LINE_SEPARATOR).append(response.getBody());
         System.out.println(responseStr);
+
+        System.out.println();
+        System.out.println();
 
         this.outputStream.write(responseStr.toString().getBytes());
         this.outputStream.flush();

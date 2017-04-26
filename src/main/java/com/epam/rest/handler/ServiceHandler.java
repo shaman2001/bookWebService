@@ -31,8 +31,7 @@ public class ServiceHandler {
         if (rqstHnd.getParsingCode() == 200) {
             switch (rqstHnd.getMethod()) {
                 case METHOD_GET:
-                    HashMap query = rqstHnd.getParams();
-                    respHnd.setSelectBooks(BookShelf.getBook(query));
+                    respHnd.setSelectBooks(BookShelf.getBook(rqstHnd.getParams()));
                     respHnd.setProcResult(true);
                     break;
                 case METHOD_DELETE:
@@ -56,7 +55,7 @@ public class ServiceHandler {
                     }
                     break;
                 default:
-                    respHnd.setSelectBooks(BookShelf.getBook());
+                    respHnd.setSelectBooks(BookShelf.getBook(rqstHnd.getParams()));
                     respHnd.setProcResult(true);
             }
          }

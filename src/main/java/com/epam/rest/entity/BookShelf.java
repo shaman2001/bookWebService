@@ -16,7 +16,7 @@ public class BookShelf {
                 setGenre("novel").setAuthor("Ernest Hemingway").setYearOfIssue(2003)
                 .setLink(FTP_BASE_ADDRESS + "for_whom_the_bell_tolls.txt").build());
         bookList.add(new Book.BookBuilder(3, "The Master and Margarita").
-                setGenre("novel").setAuthor("Mikhail Bulgakov").setYearOfIssue(1995)
+                setGenre("novel").setAuthor("Mikhail Bulgakov").setYearOfIssue(2003)
                 .setLink(FTP_BASE_ADDRESS + "the_master_and_margarita.txt").build());
         bookList.add(new Book.BookBuilder(4, "Borodino").
                 setGenre("poem").setAuthor("Mikhail Lermontov").setYearOfIssue(1960)
@@ -44,20 +44,6 @@ public class BookShelf {
         return bookList.size();
     }
 
-    @Deprecated
-    public static ArrayList<Book> getBook() {
-        return new ArrayList<>(bookList);
-    }
-
-    public static ArrayList<Book> getBook(Integer id) {
-        for(Book book: bookList) {
-            if (book.getId().equals(id)) {
-                return new ArrayList<>(Collections.singletonList(book));
-            }
-        }
-        return null;
-    }
-
     public static ArrayList<Book> getBook(HashMap query) {
         if (query.size() == 0) {
             return new ArrayList<>(bookList);
@@ -78,26 +64,6 @@ public class BookShelf {
             return result.size()!=0 ? result : null;
         }
         return null;
-
-    }
-
-    @Deprecated
-    public static ArrayList<Book> getBook(Book prms) {
-        if (prms.getId()!=0) {
-            for(Book book: bookList) {
-                if (book.getId().equals(prms.getId())) {
-                    return new ArrayList<>(Collections.singletonList(book));
-                }
-            }
-        }
-        ArrayList<Book> result = new ArrayList<>();
-        for(Book book: bookList) {
-            if (book.matches(prms)) {
-                result.add(book);
-            }
-
-        }
-        return result.size()!=0 ? result : null;
 
     }
 

@@ -129,22 +129,23 @@ public class Book {
     }
 
     public boolean matches (HashMap query) {
-        if (query.get("id") == null || !query.get("id").equals(this.id))  return false;
-        if (query.get("name") == null || !query.get("name").equals(this.name)) return false;
-        if (query.get("genre") == null || !query.get("genre").equals(this.genre)) return false;
-        if (query.get("author") == null || !query.get("author").equals(this.author)) return false;
-        if (query.get("year_of_issue") == null || !query.get("year_of_issue").equals(this.yearOfIssue)) return false;
-        return (query.get("link") == null || !query.get("link").equals(this.link));
+        if (!this.id.equals(query.get("id")) && query.get("id") != null)  return false;
+        if (!this.name.equals(query.get("name")) && query.get("name") != null) return false;
+        if (!this.genre.equals(query.get("genre")) && query.get("genre") != null) return false;
+        if (!this.author.equals(query.get("author")) && query.get("author") != null) return false;
+        if (!this.yearOfIssue.equals(Integer.parseInt((String) query.get("year_of_issue"))) && query.get("year_of_issue") != null) return false;
+        if (!this.link.equals(query.get("link")) && query.get("link") != null ) return false;
+        return true;
     }
 
-    public boolean matches (Book query) {
+ /*   public boolean matches (Book query) {
         if (query.getId() == 0 || !query.getId().equals(this.id)) return false;
         if (query.getName().equals("") || !query.getName().equals(this.name)) return false;
         if (query.getGenre().equals("") || !query.getGenre().equals(this.genre)) return false;
         if (query.getAuthor().equals("") || !query.getAuthor().equals(this.author)) return false;
         if (query.getYearOfIssue() == 0 || !query.getYearOfIssue().equals(this.yearOfIssue)) return false;
         return (query.getLink().equals("") || !query.getLink().equals(this.link));
-    }
+    }*/
 
     public JSONObject toJsonObject() {
         JSONObject jsonObj = new JSONObject();
