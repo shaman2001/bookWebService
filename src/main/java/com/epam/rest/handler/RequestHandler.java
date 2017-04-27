@@ -127,7 +127,12 @@ public class RequestHandler {
     }
 
     private void parseBody() throws IOException{
-        body = reader.readLine();
+        int len = Integer.parseInt(getHeader(CONTENT_LENGTH));
+        int curChar = 0;
+        char[] buffer = new char[len];
+        reader.read(buffer);
+        body = new String(buffer);
+        System.out.println(body);//***********************************************
     }
 
     public String getMethod() {
@@ -168,5 +173,7 @@ public class RequestHandler {
         return new ProtocolVersion(PROTOCOL_HTTP, this.httpVer[0], this.httpVer[1]);
     }
 
-
+    public String getBody() {
+        return body;
+    }
 }

@@ -5,7 +5,10 @@ import com.epam.rest.entity.Book;
 import com.epam.rest.entity.BookShelf;
 
 import java.io.IOException;
-import java.util.HashMap;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 
 import static com.epam.rest.constants.CommonConstants.*;
 
@@ -42,15 +45,18 @@ public class ServiceHandler {
                     }
                     break;
                 case METHOD_PUT:
-                    if (rqstHnd.getParams() != null) {
-                        Book newBook = new Book.BookBuilder(Integer.parseInt(rqstHnd.getParam(PARAM_ID)),
-                                rqstHnd.getParam(PARAM_NAME))
-                                .setAuthor(rqstHnd.getParam(PARAM_AUTHOR))
-                                .setGenre(rqstHnd.getParam(PARAM_GENRE))
-                                .setYearOfIssue(Integer.parseInt(rqstHnd.getParam(PARAM_Y_OF_ISSUE)))
-                                .setLink(rqstHnd.getParam(PARAM_LINK)).build();
+                    JSONParser jParser = new JSONParser();
+                    try {
+                        JSONObject jObj = (JSONObject) jParser.parse(rqstHnd.getBody());
+                        Book newBook = new Book.BookBuilder(((Number)jObj.get(PARAM_ID)).intValue(),
+                                (String)jObj.get(PARAM_NAME))
+                                .setAuthor((String)jObj.get(PARAM_AUTHOR))
+                                .setGenre((String)jObj.get(PARAM_GENRE))
+                                .setYearOfIssue(((Number)jObj.get(PARAM_Y_OF_ISSUE)).intValue())
+                                .setLink((String)jObj.get(PARAM_LINK)).build();
                         respHnd.setProcResult(BookShelf.addBook(newBook));
-                    } else {
+                    } catch (ParseException e) {
+                        System.err.println(e.getMessage());
                         respHnd.setProcResult(false);
                     }
                     break;
