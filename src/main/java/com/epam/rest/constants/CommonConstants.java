@@ -12,6 +12,7 @@ public final class CommonConstants {
     public static final String CONNECTION = "Connection";
     public static final String DATE_STR = "Date";
     public static final String HOST_STR = "Host";
+    public static final String URL_STR = "/book";
 
     public static final String EMPTY_STRING = "";
     public static final String SPACE = " ";

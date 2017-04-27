@@ -29,8 +29,13 @@ public class GETMethodByIdTests extends BaseTest {
     }
 
     @Test
+    public void getAllBooks() {
+
+    }
+
+    @Test
     public void getBookById() {
-        String newGetQuery = new QueryBuilder().setId(p_id).build();
+        String newGetQuery = new QueryBuilder().setId(p_id).buildEnc();
         given().when().get(newGetQuery).then().statusCode(200).
                 body(containsString(p_name));
 

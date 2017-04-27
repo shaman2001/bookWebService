@@ -21,16 +21,18 @@ public class RequestHandler {
     private BufferedReader reader;
     private HashMap<String, String> headers;
     private HashMap<String, String> params;
+    private String body;
 
 
     public RequestHandler(BufferedReader bufReader) {
         parsingCode = 200;
         reader = bufReader;
-        method = "";
-        url = "";
+        method = null;
+        url = null;
         headers = new HashMap<>();
         params = new HashMap<>();
         httpVer = new int[2];
+        body = null;
     }
 
     public void parseRequest() throws IOException {
@@ -61,16 +63,17 @@ public class RequestHandler {
             } catch (NumberFormatException nfe) {
                 parsingCode = 400;
             }
-        }
-        else parsingCode = 400;
-
+        }  else parsingCode = 400;
         method = cmd[0];
         Integer index = cmd[1].indexOf(QUESTION_SIGN);
         if (index < 0) url = cmd[1];
         else {
             url = URLDecoder.decode(cmd[1].substring(0, index), ISO_8859_1);
-            parseUrlParams(cmd[1].substring(index+1));
         }
+        if (!url.equals(URL_STR)) {
+            parsingCode = 400;
+        }
+        parseUrlParams(cmd[1].substring(index+1));
         parseHeaders();
         if (headers == null) {
             parsingCode = 400;
@@ -78,11 +81,19 @@ public class RequestHandler {
         if (httpVer[0] == 1 && httpVer[1] >= 1 && getHeader(HOST_STR) == null) {
             parsingCode = 400;
         }
+        if (method.equals(METHOD_PUT) && getHeader(CONTENT_LENGTH) != null) {
+            if (params.size() != 0) {
+                parsingCode = 400;
+            } else {
+                parseBody();
+            }
+        }
+
+
     }
 
     private void parseUrlParams(String prmStr) throws IOException {
         String paramLines[] = URLDecoder.decode(prmStr, ISO_8859_1).split(AMPERSAND_SIGN);
-//        this.params = new HashMap<>();
         for (String str: paramLines) {
             String tempArr[] = str.split(EQUAL_SIGN);
             if (tempArr.length == 2) {
@@ -113,6 +124,10 @@ public class RequestHandler {
             line = reader.readLine();
             System.out.println(line);//***********************************************
         }
+    }
+
+    private void parseBody() throws IOException{
+        body = reader.readLine();
     }
 
     public String getMethod() {

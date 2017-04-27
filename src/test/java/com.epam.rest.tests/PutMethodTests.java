@@ -38,12 +38,10 @@ public class PutMethodTests extends BaseTest {
 
     @Test
     public void addBookByURLParams() {
-
         String putStr = new QueryBuilder().setId(p_id).setName(p_name).setGenre(p_genre)
-                .setAuthor(p_author).setYear_of_issue(p_yearOfIssue).setLink(p_link).build();
-        String encPutStr = StrCodec.encode(putStr);
-        given().when().put(encPutStr).then().statusCode(200);
-        String getStr = StrCodec.encode(new QueryBuilder().setName(p_name).build());
+                .setAuthor(p_author).setYear_of_issue(p_yearOfIssue).setLink(p_link).buildEnc();
+        given().when().put(putStr).then().statusCode(200);
+        String getStr = StrCodec.encode(new QueryBuilder().setName(p_name).buildEnc());
         given().when().get(getStr).then().statusCode(200).body(containsString(p_name));
     }
 

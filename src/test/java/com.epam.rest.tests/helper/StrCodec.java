@@ -1,5 +1,9 @@
 package com.epam.rest.tests.helper;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import static com.epam.rest.constants.CommonConstants.*;
 
 
@@ -9,6 +13,18 @@ public class StrCodec {
         return str.replaceAll(" ", "%20")
                 .replaceAll("/", "%2F")
                 .replaceAll(":","%3A");
+    }
+
+    public static String encodeWithJS(String str) {
+        ScriptEngineManager factory = new ScriptEngineManager();
+        ScriptEngine engine = factory.getEngineByName("JavaScript");
+        String result = null;
+        try {
+            result = (String)engine.eval("encodeURIComponent('" + str + "')");
+        } catch (ScriptException e) {
+            System.err.println(e.getMessage());
+        }
+        return result;
     }
 
     public static String getParamStr (String param, String val) {
