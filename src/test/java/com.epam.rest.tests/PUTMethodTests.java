@@ -1,7 +1,10 @@
 package com.epam.rest.tests;
 
+import com.epam.rest.entity.Book;
 import com.epam.rest.tests.helper.QueryBuilder;
 import com.epam.rest.tests.helper.StrCodec;
+import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -14,7 +17,7 @@ import static org.hamcrest.Matchers.containsString;
 
 
 @RunWith(Parameterized.class)
-public class PutMethodTests extends BaseTest {
+public class PUTMethodTests extends BaseTest {
 
     private final static String FTP_BASE = "ftp://127.0.0.1:25/pub/";
 
@@ -25,8 +28,8 @@ public class PutMethodTests extends BaseTest {
     private Integer p_yearOfIssue;
     private String p_link;
 
-    public PutMethodTests (Integer id, String name, String genre, String author,
-                           Integer year_of_issue, String link) {
+    public PUTMethodTests(Integer id, String name, String genre, String author,
+                          Integer year_of_issue, String link) {
         this.p_id = id;
         this.p_name = name;
         this.p_genre = genre;
@@ -37,10 +40,15 @@ public class PutMethodTests extends BaseTest {
 
 
     @Test
-    public void addBookByURLParams() {
-        String putStr = new QueryBuilder().setId(p_id).setName(p_name).setGenre(p_genre)
-                .setAuthor(p_author).setYear_of_issue(p_yearOfIssue).setLink(p_link).buildEnc();
-        given().when().put(putStr).then().statusCode(200);
+    public void addBook() {
+        Book newBook = new Book.BookBuilder(p_id, p_name).setGenre(p_genre)
+                                .setAuthor(p_author).setYearOfIssue(p_yearOfIssue)
+                                .setLink(p_link).build();
+        Response resp = given()
+                        .contentType(ContentType.JSON)
+                        .body(newBook)
+                        .when()
+                        .put();
         String getStr = StrCodec.encode(new QueryBuilder().setName(p_name).buildEnc());
         given().when().get(getStr).then().statusCode(200).body(containsString(p_name));
     }
