@@ -48,13 +48,11 @@ public class RequestHandler {
             parsingCode = 400;
             return; //return bad request
         }
-
         String cmd[] = initialLine.split(SPACE);
         if (cmd.length != 3) {
             parsingCode = 400;
             return;
         }
-
         if (cmd[2].indexOf(PROTOCOL_HTTP) == 0 && cmd[2].indexOf(POINT_SIGN) > 5) {
             String tempArr[] = cmd[2].substring(5).split("\\.");
             try {
@@ -89,7 +87,6 @@ public class RequestHandler {
             }
         }
 
-
     }
 
     private void parseUrlParams(String prmStr) throws IOException {
@@ -103,6 +100,7 @@ public class RequestHandler {
                 params.put(tempArr[0], "");
             }
         }
+
     }
 
     private void parseHeaders() throws IOException {
@@ -119,7 +117,6 @@ public class RequestHandler {
             else {
                 String tempArr[] = line.split(COLON_SPACE);
                 headers.put(tempArr[0], tempArr[1]);
-//                headers.put(line.substring(0, index).toLowerCase(), line.substring(index+1).trim());
             }
             line = reader.readLine();
             System.out.println(line);//***********************************************
@@ -128,7 +125,6 @@ public class RequestHandler {
 
     private void parseBody() throws IOException{
         int len = Integer.parseInt(getHeader(CONTENT_LENGTH));
-        int curChar = 0;
         char[] buffer = new char[len];
         reader.read(buffer);
         body = new String(buffer);
