@@ -9,6 +9,7 @@ public final class CommonConstants {
     public static final String CONTENT_LENGTH = "Content-Length";
     public static final String CONTENT_LANGUAGE = "Content-Language";
     public static final String CONTENT_ENCODING = "Content-Encoding";
+    public static final String BOOK_COUNT = "Book-count";
     public static final String CONNECTION = "Connection";
     public static final String DATE_STR = "Date";
     public static final String HOST_STR = "Host";

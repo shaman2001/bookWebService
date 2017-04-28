@@ -3,11 +3,10 @@ package com.epam.rest.handler;
 import static com.epam.rest.constants.CommonConstants.*;
 
 import com.epam.rest.entity.Book;
-import com.epam.rest.entity.BookShelf;
 import com.epam.rest.entity.Response;
 import com.epam.rest.helper.DateHelper;
+import com.google.gson.Gson;
 import org.apache.http.ProtocolVersion;
-import org.json.simple.JSONArray;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -94,8 +93,7 @@ public class ResponseHandler {
 
     private void prepareGetPart() {
         this.response.setContentType(CONTENT_TYPE_JSON);
-        this.response.setBody(JSONArray.toJSONString(selectBooks));
-//        this.response.setBody(JSONArray.toJSONString(BookShelf.getBook()));
+        this.response.setBody(new Gson().toJson(selectBooks));
         this.response.setContentLength(String.valueOf(response.getBody().length()));
     }
 

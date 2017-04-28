@@ -10,7 +10,7 @@ public class Book {
     private String name;
     private String genre;
     private String author;
-    private Integer yearOfIssue;
+    private Integer year_of_issue;
     private String link;
 
     public Book() {
@@ -18,7 +18,7 @@ public class Book {
         this.name = "";
         this.genre = "";
         this.author = "";
-        this.yearOfIssue = 0;
+        this.year_of_issue = 0;
         this.link = "";
     }
 
@@ -27,7 +27,7 @@ public class Book {
         this.name = p_name;
         this.genre = p_genre;
         this.author = p_author;
-        this.yearOfIssue = p_uoissue;
+        this.year_of_issue = p_uoissue;
         this.link = link;
     }
 
@@ -36,7 +36,7 @@ public class Book {
         this.name = bookBuilder.name;
         this.genre = bookBuilder.genre;
         this.author = bookBuilder.author;
-        this.yearOfIssue = bookBuilder.yearOfIssue;
+        this.year_of_issue = bookBuilder.year_of_issue;
         this.link = bookBuilder.link;
     }
 
@@ -52,8 +52,8 @@ public class Book {
         this.author = author;
     }
 
-    public void setYearOfIssue(Integer yearOfIssue) {
-        this.yearOfIssue = yearOfIssue;
+    public void setYearOfIssue(Integer year_of_issue) {
+        this.year_of_issue = year_of_issue;
     }
 
     public void setLocalLink(String localLink) {
@@ -77,7 +77,7 @@ public class Book {
     }
 
     public Integer getYearOfIssue() {
-        return yearOfIssue;
+        return year_of_issue;
     }
 
     public String getLink() {
@@ -91,7 +91,7 @@ public class Book {
         //optional
         private String genre;
         private String author;
-        private Integer yearOfIssue;
+        private Integer year_of_issue;
         private String link;
 
         public BookBuilder (Integer b_id, String b_name) {
@@ -99,7 +99,7 @@ public class Book {
             this.name = b_name;
             this.genre = "";
             this.author = "";
-            this.yearOfIssue = 0;
+            this.year_of_issue = 0;
             this.link = "";
         }
 
@@ -113,8 +113,8 @@ public class Book {
             return this;
         }
 
-        public BookBuilder setYearOfIssue (Integer val) {
-            this.yearOfIssue = val;
+        public BookBuilder setYearOfIssue(Integer val) {
+            this.year_of_issue = val;
             return this;
         }
 
@@ -133,7 +133,7 @@ public class Book {
         if (!this.name.equals(query.get("name")) && query.get("name") != null) return false;
         if (!this.genre.equals(query.get("genre")) && query.get("genre") != null) return false;
         if (!this.author.equals(query.get("author")) && query.get("author") != null) return false;
-        if (!this.yearOfIssue.equals(Integer.parseInt((String) query.get("year_of_issue"))) && query.get("year_of_issue") != null) return false;
+        if (!this.year_of_issue.equals(Integer.parseInt((String) query.get("year_of_issue"))) && query.get("year_of_issue") != null) return false;
         if (!this.link.equals(query.get("link")) && query.get("link") != null ) return false;
         return true;
     }
@@ -143,7 +143,7 @@ public class Book {
         if (query.getName().equals("") || !query.getName().equals(this.name)) return false;
         if (query.getGenre().equals("") || !query.getGenre().equals(this.genre)) return false;
         if (query.getAuthor().equals("") || !query.getAuthor().equals(this.author)) return false;
-        if (query.getYearOfIssue() == 0 || !query.getYearOfIssue().equals(this.yearOfIssue)) return false;
+        if (query.getYearOfIssue() == 0 || !query.getYearOfIssue().equals(this.year_of_issue)) return false;
         return (query.getLink().equals("") || !query.getLink().equals(this.link));
     }*/
 
@@ -153,7 +153,7 @@ public class Book {
         jsonObj.put("name", this.name);
         jsonObj.put("genre", this.genre);
         jsonObj.put("author", this.author);
-        jsonObj.put("year_of_issue", this.yearOfIssue);
+        jsonObj.put("year_of_issue", this.year_of_issue);
         jsonObj.put("link", this.link);
         return jsonObj;
     }
@@ -185,7 +185,7 @@ public class Book {
         if (!name.equals(book.name)) return false;
         if (!genre.equals(book.genre)) return false;
         if (!author.equals(book.author)) return false;
-        if (!yearOfIssue.equals(book.yearOfIssue)) return false;
+        if (!year_of_issue.equals(book.year_of_issue)) return false;
         return link.equals(book.link);
     }
 
@@ -195,7 +195,7 @@ public class Book {
         result = 31 * result + name.hashCode();
         result = 31 * result + genre.hashCode();
         result = 31 * result + author.hashCode();
-        result = 31 * result + yearOfIssue.hashCode();
+        result = 31 * result + year_of_issue.hashCode();
         result = 31 * result + link.hashCode();
         return result;
     }

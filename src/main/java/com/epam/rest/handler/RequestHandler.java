@@ -14,19 +14,19 @@ public class RequestHandler {
 
     private enum RequestTypes{GET, PUT, POST, DELETE}
 
+    private BufferedReader reader;
     private Integer parsingCode;
     private String method;
     private String url;
     private int[] httpVer;
-    private BufferedReader reader;
     private HashMap<String, String> headers;
     private HashMap<String, String> params;
     private String body;
 
 
     public RequestHandler(BufferedReader bufReader) {
-        parsingCode = 200;
         reader = bufReader;
+        parsingCode = 200;
         method = null;
         url = null;
         headers = new HashMap<>();
@@ -68,7 +68,7 @@ public class RequestHandler {
         else {
             url = URLDecoder.decode(cmd[1].substring(0, index), ISO_8859_1);
         }
-        if (!url.equals(URL_STR)) {
+        if (!url.equals(URL_STR) && !url.equals("/book/")) {
             parsingCode = 400;
         }
         parseUrlParams(cmd[1].substring(index+1));
