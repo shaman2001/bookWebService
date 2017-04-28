@@ -2,17 +2,21 @@ package com.epam.rest.tests;
 
 import com.epam.rest.entity.Book;
 import com.epam.rest.tests.helper.QueryBuilder;
-import com.epam.rest.tests.helper.StrCodec;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.path.json.JsonPath.from;
 import static org.hamcrest.Matchers.containsString;
 
 
@@ -44,13 +48,20 @@ public class PUTMethodTests extends BaseTest {
         Book newBook = new Book.BookBuilder(p_id, p_name).setGenre(p_genre)
                                 .setAuthor(p_author).setYearOfIssue(p_yearOfIssue)
                                 .setLink(p_link).build();
-        Response resp = given()
-                        .contentType(ContentType.JSON)
-                        .body(newBook)
-                        .when()
-                        .put();
-        String getStr = StrCodec.encode(new QueryBuilder().setName(p_name).buildEnc());
-        given().when().get(getStr).then().statusCode(200).body(containsString(p_name));
+        given().contentType(ContentType.JSON).body(newBook).when().put().then().statusCode(200);
+        String getStr = new QueryBuilder().setId(p_id).buildEnc();
+        //given().when().get(getStr).then().statusCode(200).body(containsString(p_name));
+        Response resp = given().when().get(getStr);
+        String respStr = resp.body().asString();
+ //       JsonArray arr = new JsonArray();
+        JsonParser parser = new JsonParser();
+        JsonArray arr = (JsonArray) parser.parse(respStr);
+
+//        ArrayList<Object> jsonAsArrayList = from(respStr).get("");
+//        List<Book> bookList = (ArrayList<Book>) parser.parse(respStr);
+
+//        Book storedBook = (Book) JSONArray[0];
+//        Assert.assertEquals(bookList[0], newBook);
     }
 
 
