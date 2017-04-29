@@ -1,12 +1,9 @@
 package com.epam.rest.entity;
 
-import org.apache.http.Header;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.impl.EnglishReasonPhraseCatalog;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicStatusLine;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.epam.rest.constants.CommonConstants.*;
@@ -105,6 +102,10 @@ public class Response {
 
     public void setContentEncoding(String enc) {
         this.headers.put(CONTENT_ENCODING, enc);
+    }
+
+    public void setBooksCountHeader() {
+        this.headers.put(BOOKS_COUNT, BookShelf.getBooksCount().toString());
     }
 
     public String getBody() {

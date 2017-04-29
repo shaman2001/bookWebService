@@ -83,6 +83,8 @@ public class ResponseHandler {
         this.response.setServer(SERVER_STR);
         //this.response.setContentEncoding("gzip"); //falls all the responses. for checking
         this.response.setContentLanguage("en");
+        this.response.setBooksCountHeader();
+
     }
 
     private void prepareErrorResponsePart() {
