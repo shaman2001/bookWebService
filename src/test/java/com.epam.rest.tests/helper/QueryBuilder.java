@@ -80,7 +80,7 @@ public class QueryBuilder {
         }
 
         /*for (Field field: this.getClass().getDeclaredFields()) {
-            if (field.get() != 0 ^ field != null) {
+            if (field.get() != 0 && field != null) {
 
             }
         }*/
