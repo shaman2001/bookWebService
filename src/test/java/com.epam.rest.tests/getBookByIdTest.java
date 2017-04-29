@@ -1,37 +1,39 @@
 package com.epam.rest.tests;
 
+import com.epam.rest.entity.Book;
+import com.epam.rest.tests.helper.JsonHelper;
 import com.epam.rest.tests.helper.QueryBuilder;
+import com.jayway.restassured.response.Response;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import static com.epam.rest.constants.CommonConstants.*;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assume.assumeNotNull;
 
 import java.util.Arrays;
 import java.util.List;
 
 
 @RunWith(Parameterized.class)
-public class GETMethodByIdTests extends BaseTest {
+public class getBookByIdTest extends BaseTest {
 
     public Integer p_id;
     public String p_name;
 
-    public GETMethodByIdTests(Integer id, String name) {
+    public getBookByIdTest(Integer id, String name) {
         this.p_id = id;
         this.p_name = name;
     }
 
     @Test
-    public void basicResponseTest() {
+    public void basicGetResponseTest() {
         given().when().get().then().statusCode(200);
     }
 
-    @Test
-    public void getAllBooks() {
-
-    }
 
     @Test
     public void getBookById() {

@@ -1,7 +1,9 @@
 package com.epam.rest.tests;
 
 import com.epam.rest.entity.Book;
+import com.epam.rest.tests.helper.JsonHelper;
 import com.epam.rest.tests.helper.QueryBuilder;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.jayway.restassured.http.ContentType;
@@ -21,7 +23,7 @@ import static org.hamcrest.Matchers.containsString;
 
 
 @RunWith(Parameterized.class)
-public class PUTMethodTests extends BaseTest {
+public class addBookTest extends BaseTest {
 
     private final static String FTP_BASE = "ftp://127.0.0.1:25/pub/";
 
@@ -32,8 +34,8 @@ public class PUTMethodTests extends BaseTest {
     private Integer p_yearOfIssue;
     private String p_link;
 
-    public PUTMethodTests(Integer id, String name, String genre, String author,
-                          Integer year_of_issue, String link) {
+    public addBookTest(Integer id, String name, String genre, String author,
+                       Integer year_of_issue, String link) {
         this.p_id = id;
         this.p_name = name;
         this.p_genre = genre;
@@ -44,24 +46,15 @@ public class PUTMethodTests extends BaseTest {
 
 
     @Test
-    public void addBook() {
+    public void addBookTest() {
         Book newBook = new Book.BookBuilder(p_id, p_name).setGenre(p_genre)
                                 .setAuthor(p_author).setYearOfIssue(p_yearOfIssue)
                                 .setLink(p_link).build();
         given().contentType(ContentType.JSON).body(newBook).when().put().then().statusCode(200);
         String getStr = new QueryBuilder().setId(p_id).buildEnc();
-        //given().when().get(getStr).then().statusCode(200).body(containsString(p_name));
-        Response resp = given().when().get(getStr);
-        String respStr = resp.body().asString();
- //       JsonArray arr = new JsonArray();
-        JsonParser parser = new JsonParser();
-        JsonArray arr = (JsonArray) parser.parse(respStr);
-
-//        ArrayList<Object> jsonAsArrayList = from(respStr).get("");
-//        List<Book> bookList = (ArrayList<Book>) parser.parse(respStr);
-
-//        Book storedBook = (Book) JSONArray[0];
-//        Assert.assertEquals(bookList[0], newBook);
+        String respStr = given().when().get(getStr).asString();
+        Book[] storedBook = JsonHelper.stringToBookArray(respStr);
+        Assert.assertEquals(storedBook[0], newBook);
     }
 
 

@@ -1,15 +1,21 @@
 package com.epam.rest.tests;
 
+import com.epam.rest.entity.Book;
 import com.epam.rest.helper.PropertyLoader;
+import com.epam.rest.tests.helper.JsonHelper;
 import com.jayway.restassured.RestAssured;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.junit.BeforeClass;
 
+import static com.jayway.restassured.RestAssured.given;
+
 
 public class BaseTest {
 
-    private static final Logger LOG = LogManager.getLogger(BaseTest.class);
+    public static final Logger LOG = LogManager.getLogger(BaseTest.class);
+
+    public static Book existingBook;
 
     @BeforeClass
     public static void setUp() {
@@ -30,6 +36,15 @@ public class BaseTest {
             base = "/book";
         }
         RestAssured.basePath = base;
+
+        //set existingBook field;
+        String respStr = given().when().get().asString();
+        Book[] storedBook = JsonHelper.stringToBookArray(respStr);
+        if (storedBook.length > 0) {
+            existingBook = storedBook[0];
+        } else {
+            LOG.error("There is not a any book on the bookshelf");
+        }
     }
 
 
