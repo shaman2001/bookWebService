@@ -1,9 +1,6 @@
-package com.epam.rest.tests;
+package com.epam.rest.tests.rest_assured;
 
-import com.epam.rest.entity.Book;
-import com.epam.rest.tests.helper.JsonHelper;
 import com.jayway.restassured.http.ContentType;
-import org.junit.Before;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;

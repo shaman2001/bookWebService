@@ -1,25 +1,18 @@
-package com.epam.rest.tests;
+package com.epam.rest.tests.rest_assured;
 
 import com.epam.rest.entity.Book;
 import com.epam.rest.tests.helper.JsonHelper;
 import com.epam.rest.tests.helper.QueryBuilder;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.path.json.JsonPath.from;
-import static org.hamcrest.Matchers.containsString;
 
 
 @RunWith(Parameterized.class)
