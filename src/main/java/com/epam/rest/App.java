@@ -12,7 +12,7 @@ import java.net.Socket;
 
 public class App {
 
-    private static final Logger LOG = LogManager.getLogger(App.class);
+    public static final Logger LOG = LogManager.getLogger(App.class);
 
     public static void main(String args[] ) throws IOException {
         final Integer PORT = Integer.parseInt(PropertyLoader.getProperty("server.port"));

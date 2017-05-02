@@ -1,10 +1,14 @@
 package com.epam.rest.handler;
 
 
+import com.epam.rest.App;
 import com.epam.rest.entity.Book;
 import com.epam.rest.entity.BookShelf;
 
 import java.io.IOException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -13,6 +17,8 @@ import org.json.simple.parser.ParseException;
 import static com.epam.rest.constants.CommonConstants.*;
 
 public class ServiceHandler {
+
+    private static final Logger LOG = LogManager.getLogger(ServiceHandler.class);
 
     private RequestHandler rqstHnd;
     private ResponseHandler respHnd;
@@ -26,7 +32,7 @@ public class ServiceHandler {
         try {
             this.rqstHnd.parseRequest();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            LOG.error(e.getMessage());
         }
     }
 
@@ -55,8 +61,8 @@ public class ServiceHandler {
                                 .setYearOfIssue(((Number)jObj.get(PARAM_Y_OF_ISSUE)).intValue())
                                 .setLink((String)jObj.get(PARAM_LINK)).build();
                         respHnd.setProcResult(BookShelf.addBook(newBook));
-                    } catch (ParseException e) {
-                        System.err.println(e.getMessage());
+                    } catch (ParseException | NullPointerException e) {
+                        LOG.error(e.getMessage());
                         respHnd.setProcResult(false);
                     }
                     break;

@@ -1,16 +1,19 @@
 package com.epam.rest.handler;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.*;
 import java.net.Socket;
 
 public class SocketHandler implements Runnable {
 
+    private static final Logger LOG = LogManager.getLogger(SocketHandler.class);
 
     private Socket sock;
     private OutputStream outStr;
     private InputStream inStr;
 
-    private static final String DEFAULT_FILES_DIR = "/www";
 
     public SocketHandler (Socket socket) throws IOException {
         this.sock = socket;
@@ -28,12 +31,12 @@ public class SocketHandler implements Runnable {
             serviceHandler.processData();
             serviceHandler.sendResponse();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            LOG.error(e.getMessage());
         } finally {
             try {
                 sock.close();
             } catch (IOException e) {
-                System.err.println(e.getMessage());
+                LOG.error(e.getMessage());
             }
         }
 
@@ -53,17 +56,6 @@ public class SocketHandler implements Runnable {
             builder.append(ln).append(System.getProperty("line.separator"));
         }
         return builder.toString();
-    }
-
-    private String getURIFromHeader(String header) {
-        int from = header.indexOf(" ") + 1;
-        int to = header.indexOf(" ", from);
-        String uri = header.substring(from, to);
-        int paramIndex = uri.indexOf("?");
-        if (paramIndex != -1) {
-            uri = uri.substring(0, paramIndex);
-        }
-        return DEFAULT_FILES_DIR + uri;
     }
 
 
