@@ -12,7 +12,7 @@ public class addExistingBookTest extends BaseTest{
     @Test
     public void addBookExistingBook() {
         assumeNotNull(existingBook);
-        given().contentType(ContentType.JSON).body(existingBook).when().put().then().statusCode(500);
+        given().contentType(ContentType.JSON).body(existingBook).when().put().then().statusCode(409);
     }
 
 }

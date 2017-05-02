@@ -43,7 +43,7 @@ public class addBookTest extends BaseTest {
         Book newBook = new Book.BookBuilder(p_id, p_name).setGenre(p_genre)
                                 .setAuthor(p_author).setYearOfIssue(p_yearOfIssue)
                                 .setLink(p_link).build();
-        given().contentType(ContentType.JSON).body(newBook).when().put().then().statusCode(200);
+        given().contentType(ContentType.JSON).body(newBook).when().put().then().statusCode(201);
         String getStr = new QueryBuilder().setId(p_id).buildEnc();
         String respStr = given().when().get(getStr).asString();
         Book[] storedBook = JsonHelper.stringToBookArray(respStr);

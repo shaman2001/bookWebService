@@ -22,6 +22,6 @@ public class delBookTests extends BaseTest {
     public void delNotExistingBook() {
         int notExistedId = 999;
         String delId = new QueryBuilder().setId(notExistedId).buildEnc();
-        given().when().delete(delId).then().statusCode(500);
+        given().when().delete(delId).then().statusCode(404);
     }
 }

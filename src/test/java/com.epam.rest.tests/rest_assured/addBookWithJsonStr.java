@@ -28,7 +28,7 @@ public class addBookWithJsonStr extends BaseTest{
     @Test
     public void addWrongBookStr () {
         int bookCountBefore = Integer.parseInt(given().when().get().then().extract().header(BOOKS_COUNT));
-        given().contentType(ContentType.JSON).body(WRONG_JSON_OBJECT_STR).when().put().then().statusCode(500);
+        given().contentType(ContentType.JSON).body(WRONG_JSON_OBJECT_STR).when().put().then().statusCode(400);
         int bookCountAfter = Integer.parseInt(given().when().get().then().extract().header(BOOKS_COUNT));
         Assert.assertTrue(bookCountBefore == bookCountAfter);
     }
@@ -36,7 +36,7 @@ public class addBookWithJsonStr extends BaseTest{
     @Test
     public void addProperBookStr () {
         int bookCountBefore = Integer.parseInt(given().when().get().then().extract().header(BOOKS_COUNT));
-        given().contentType(ContentType.JSON).body(PROPER_JSON_OBJECT_STR).when().put().then().statusCode(200);
+        given().contentType(ContentType.JSON).body(PROPER_JSON_OBJECT_STR).when().put().then().statusCode(201);
         Response getResp = given().when().get();
         int bookCountAfter = Integer.parseInt(getResp.then().extract().header(BOOKS_COUNT));
         addBookResult = bookCountBefore != bookCountAfter;
