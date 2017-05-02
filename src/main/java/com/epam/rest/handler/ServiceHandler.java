@@ -86,7 +86,7 @@ public class ServiceHandler {
                     .setYearOfIssue(((Number)jObj.get(PARAM_Y_OF_ISSUE)).intValue())
                     .setLink((String)jObj.get(PARAM_LINK)).build();
             if (BookShelf.addBook(newBook)) {
-                respHnd.setProcResultCode(200);
+                respHnd.setProcResultCode(201);
             } else {
                 respHnd.setProcResultCode(409); //book already exist
             }
