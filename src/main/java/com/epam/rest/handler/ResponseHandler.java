@@ -11,7 +11,6 @@ import org.apache.http.ProtocolVersion;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 
@@ -23,22 +22,22 @@ public class ResponseHandler {
     private RequestHandler requestHnd;
     private Response response;
     private OutputStream outputStream;
-    private ArrayList<Book> selectBooks;
-    private boolean procResult;
+    private ArrayList<Book> selectedBooks;
+    private int procResultCode;
 
 
-    public void setSelectBooks(ArrayList<Book> selectBooks) {
-        this.selectBooks = selectBooks;
+    public void setSelectedBooks(ArrayList<Book> selectedBooks) {
+        this.selectedBooks = selectedBooks;
     }
 
-    public void setProcResult(boolean procResult) {
-        this.procResult = procResult;
+    public void setProcResultCode(int procResultCode) {
+        this.procResultCode = procResultCode;
     }
 
     public ResponseHandler (RequestHandler rqst, OutputStream outStr) {
         this.requestHnd = rqst;
         this.outputStream = outStr;
-        this.selectBooks = new ArrayList<>();
+        this.selectedBooks = new ArrayList<>();
 
     }
 
@@ -47,14 +46,17 @@ public class ResponseHandler {
     }
 
     public void prepareResponse() {
-        Integer code = 500;
-        if (procResult) {
-            code = requestHnd.getParsingCode();
+        int parsCode = requestHnd.getParsingCode();
+        int code;
+        if (parsCode>=200 && parsCode<=299) {
+            code = procResultCode;
+        } else {
+            code = parsCode;
         }
         ProtocolVersion httpVerStr = this.requestHnd.getProtocolVersion();
         this.response = new Response(httpVerStr, code);
         SetCommonHeaders();
-        if (this.response.getStatusCode() != 200) {
+        if (code >= 400) {
             prepareErrorResponsePart();
             return;
         }
@@ -95,7 +97,7 @@ public class ResponseHandler {
 
     private void prepareGetPart() {
         this.response.setContentType(CONTENT_TYPE_JSON);
-        this.response.setBody(new Gson().toJson(selectBooks));
+        this.response.setBody(new Gson().toJson(selectedBooks));
         this.response.setContentLength(String.valueOf(response.getBody().length()));
     }
 

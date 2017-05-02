@@ -42,21 +42,5 @@ public class SocketHandler implements Runnable {
 
     }
 
-    private String readRequest() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inStr));
-        RequestHandler request = new RequestHandler(reader);
-        
-        StringBuilder builder = new StringBuilder();
-        String ln = null;
-        while (true) {
-            ln = reader.readLine();
-            if (ln == null || ln.isEmpty()) {
-                break;
-            }
-            builder.append(ln).append(System.getProperty("line.separator"));
-        }
-        return builder.toString();
-    }
-
 
 }

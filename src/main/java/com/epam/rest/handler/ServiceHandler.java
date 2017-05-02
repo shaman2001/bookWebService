@@ -1,11 +1,11 @@
 package com.epam.rest.handler;
 
 
-import com.epam.rest.App;
 import com.epam.rest.entity.Book;
 import com.epam.rest.entity.BookShelf;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,35 +40,16 @@ public class ServiceHandler {
         if (rqstHnd.getParsingCode() == 200) {
             switch (rqstHnd.getMethod()) {
                 case METHOD_GET:
-                    respHnd.setSelectBooks(BookShelf.getBook(rqstHnd.getParams()));
-                    respHnd.setProcResult(true);
+                    processGet();
                     break;
                 case METHOD_DELETE:
-                    if (rqstHnd.getParams()!= null && Integer.parseInt(rqstHnd.getParam(PARAM_ID)) > 0) {
-                        respHnd.setProcResult(BookShelf.delBook(Integer.parseInt(rqstHnd.getParam(PARAM_ID))));
-                    } else {
-                        respHnd.setProcResult(false);
-                    }
+                    processDelete();
                     break;
                 case METHOD_PUT:
-                    JSONParser jParser = new JSONParser();
-                    try {
-                        JSONObject jObj = (JSONObject) jParser.parse(rqstHnd.getBody());
-                        Book newBook = new Book.BookBuilder(((Number)jObj.get(PARAM_ID)).intValue(),
-                                (String)jObj.get(PARAM_NAME))
-                                .setAuthor((String)jObj.get(PARAM_AUTHOR))
-                                .setGenre((String)jObj.get(PARAM_GENRE))
-                                .setYearOfIssue(((Number)jObj.get(PARAM_Y_OF_ISSUE)).intValue())
-                                .setLink((String)jObj.get(PARAM_LINK)).build();
-                        respHnd.setProcResult(BookShelf.addBook(newBook));
-                    } catch (ParseException | NullPointerException e) {
-                        LOG.error(e.getMessage());
-                        respHnd.setProcResult(false);
-                    }
+                    processPut();
                     break;
                 default:
-                    respHnd.setSelectBooks(BookShelf.getBook(rqstHnd.getParams()));
-                    respHnd.setProcResult(true);
+                    processGet();
             }
          }
 
@@ -82,4 +63,51 @@ public class ServiceHandler {
             System.err.println(e.getMessage());
         }
     }
+
+    private void processGet() {
+        ArrayList<Book> books = BookShelf.getBook(rqstHnd.getParams());
+        if (books != null && !books.isEmpty()) {
+            respHnd.setSelectedBooks(books);
+            respHnd.setProcResultCode(200);
+        } else {
+            respHnd.setProcResultCode(404);
+        }
+
+    }
+
+    private void processPut() {
+        JSONParser jParser = new JSONParser();
+        try {
+            JSONObject jObj = (JSONObject) jParser.parse(rqstHnd.getBody());
+            Book newBook = new Book.BookBuilder(((Number)jObj.get(PARAM_ID)).intValue(),
+                    (String)jObj.get(PARAM_NAME))
+                    .setAuthor((String)jObj.get(PARAM_AUTHOR))
+                    .setGenre((String)jObj.get(PARAM_GENRE))
+                    .setYearOfIssue(((Number)jObj.get(PARAM_Y_OF_ISSUE)).intValue())
+                    .setLink((String)jObj.get(PARAM_LINK)).build();
+            if (BookShelf.addBook(newBook)) {
+                respHnd.setProcResultCode(200);
+            } else {
+                respHnd.setProcResultCode(409); //book already exist
+            }
+        } catch (ParseException | NullPointerException e) {
+            LOG.error(e.getMessage());
+            respHnd.setProcResultCode(400); //bad request
+        }
+
+    }
+
+    private void processDelete() {
+        if (rqstHnd.getParams().size() == 1 && Integer.parseInt(rqstHnd.getParam(PARAM_ID)) > 0) {
+            if (BookShelf.delBook(Integer.parseInt(rqstHnd.getParam(PARAM_ID)))) {
+                respHnd.setProcResultCode(200);
+            } else {
+                respHnd.setProcResultCode(404); //book with requested id not found
+            }
+        } else {
+            respHnd.setProcResultCode(400); //bad request
+        }
+
+    }
+
 }
