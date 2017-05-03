@@ -11,7 +11,7 @@ import static com.jayway.restassured.RestAssured.given;
 import static com.epam.rest.constants.CommonConstants.*;
 
 
-public class addBookWithJsonStr extends BaseTest{
+public class AddBookWithJsonStr extends BaseTest{
 
     private final static String WRONG_JSON_OBJECT_STR = "{\"id\": 6, \"name\": \"The oldman and the sea\", " +
                 "\"genre\": \"novel\", \"author\": \"Ernest Hamingway\", \"year_of_writing\": 1955, " +

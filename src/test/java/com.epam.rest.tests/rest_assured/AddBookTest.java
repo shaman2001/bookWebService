@@ -16,7 +16,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 
 @RunWith(Parameterized.class)
-public class addBookTest extends BaseTest {
+public class AddBookTest extends BaseTest {
 
     private final static String FTP_BASE = "ftp://127.0.0.1:25/pub/";
 
@@ -27,7 +27,7 @@ public class addBookTest extends BaseTest {
     private Integer p_yearOfIssue;
     private String p_link;
 
-    public addBookTest(Integer id, String name, String genre, String author,
+    public AddBookTest(Integer id, String name, String genre, String author,
                        Integer year_of_issue, String link) {
         this.p_id = id;
         this.p_name = name;

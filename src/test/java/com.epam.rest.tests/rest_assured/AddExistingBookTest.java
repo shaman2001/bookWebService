@@ -6,7 +6,7 @@ import org.junit.Test;
 import static com.jayway.restassured.RestAssured.given;
 import static org.junit.Assume.assumeNotNull;
 
-public class addExistingBookTest extends BaseTest{
+public class AddExistingBookTest extends BaseTest{
 
 
     @Test

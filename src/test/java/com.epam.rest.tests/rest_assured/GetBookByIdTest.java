@@ -13,21 +13,15 @@ import java.util.List;
 
 
 @RunWith(Parameterized.class)
-public class getBookByIdTest extends BaseTest {
+public class GetBookByIdTest extends BaseTest {
 
     public Integer p_id;
     public String p_name;
 
-    public getBookByIdTest(Integer id, String name) {
+    public GetBookByIdTest(Integer id, String name) {
         this.p_id = id;
         this.p_name = name;
     }
-
-    @Test
-    public void basicGetResponseTest() {
-        given().when().get().then().statusCode(200);
-    }
-
 
     @Test
     public void getBookById() {

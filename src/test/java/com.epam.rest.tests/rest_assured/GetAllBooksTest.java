@@ -10,7 +10,7 @@ import static com.epam.rest.constants.CommonConstants.BOOKS_COUNT;
 import static com.jayway.restassured.RestAssured.given;
 import static org.junit.Assume.assumeNotNull;
 
-public class getAllBooksTest extends BaseTest {
+public class GetAllBooksTest extends BaseTest {
 
     @Test
     public void getAllBooks() {
@@ -22,6 +22,5 @@ public class getAllBooksTest extends BaseTest {
         int booksCount = Integer.parseInt(getResp.then().extract().header(BOOKS_COUNT));
         Assert.assertTrue(storedBook.length == booksCount);
     }
-
 
 }
