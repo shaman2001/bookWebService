@@ -1,6 +1,5 @@
 package com.epam.rest.helper;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -12,11 +11,8 @@ public class PropertyLoader {
 
     static {
         FileInputStream input = null;
-        File file;
         try {
-            file = new File(PROPERTIES_FILE_PATH);
-            System.out.println(file.getAbsoluteFile());
-            input = new FileInputStream(file);
+            input = new FileInputStream(PROPERTIES_FILE_PATH);
             prop.load(input);
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
