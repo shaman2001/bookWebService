@@ -1,8 +1,58 @@
-{
-  "id": "1",
-  "name": "Burning Daylight",
-  "genre": "Fiction",
-  "author": "Jack London",
-  "yearOfIssue": 1990,
-  "localLink": "ftp://127.0.0.1/pub/burning_daylight.txt"
-}
+[
+  {
+    "id": 1,
+    "name": "Burning Daylight",
+    "genre": "novel",
+    "author": "Jack London",
+    "year_of_issue": 1990,
+    "link": "ftp://127.0.0.1/pub/burning_daylight.txt"
+  },
+  {
+    "id": 2,
+    "name": "For whom the bell tolls",
+    "genre": "novel",
+    "author": "Ernest Hemingway",
+    "year_of_issue": 2003,
+    "link": "ftp://127.0.0.1/pub/for_whom_the_bell_tolls.txt"
+  },
+  {
+    "id": 3,
+    "name": "The Master and Margarita",
+    "genre": "novel",
+    "author": "Mikhail Bulgakov",
+    "year_of_issue": 2003,
+    "link": "ftp://127.0.0.1/pub/the_master_and_margarita.txt"
+  },
+  {
+    "id": 4,
+    "name": "Borodino",
+    "genre": "poem",
+    "author": "Mikhail Lermontov",
+    "year_of_issue": 1960,
+    "link": "ftp://127.0.0.1/pub/borodino.txt"
+  },
+  {
+    "id": 5,
+    "name": "Morals",
+    "genre": "essays",
+    "author": "Plutarch",
+    "year_of_issue": 1531,
+    "link": "ftp://127.0.0.1/pub/morals.txt"
+  },
+  {
+    "id": 6,
+    "name": "The Sea of Monsters",
+    "genre": "fantasy",
+    "author": "Rick Riordan",
+    "year_of_issue": 2005,
+    "link": "ftp://127.0.0.1/pub/the_sea_of_monsters.txt"
+  },
+  {
+    "id": 7,
+    "name": "Sophie's World : The Greek Philosophers",
+    "genre": "fantasy",
+    "author": "Jostein Gaarder",
+    "year_of_issue": 2001,
+    "link": "ftp://127.0.0.1/pub/sophie's_world_:_the_greek_philosophers.txt"
+  }
+]
