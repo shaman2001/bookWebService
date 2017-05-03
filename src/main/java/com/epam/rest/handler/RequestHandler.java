@@ -24,7 +24,7 @@ public class RequestHandler {
     private String body;
 
 
-    public RequestHandler(BufferedReader bufReader) {
+    RequestHandler(BufferedReader bufReader) {
         reader = bufReader;
         parsingCode = 200;
         method = null;
@@ -35,7 +35,7 @@ public class RequestHandler {
         body = null;
     }
 
-    public void parseRequest() throws IOException {
+    void parseRequest() throws IOException {
 
         parsingCode = 200; // return OK by default
         String initialLine = reader.readLine();
@@ -121,21 +121,25 @@ public class RequestHandler {
             line = reader.readLine();
             System.out.println(line);//***********************************************
         }
+
     }
 
-    private void parseBody() throws IOException{
-        int len = Integer.parseInt(getHeader(CONTENT_LENGTH));
-        char[] buffer = new char[len];
-        reader.read(buffer);
-        body = new String(buffer);
-        System.out.println(body);//***********************************************
+    private void parseBody() throws IOException {
+        if (getHeader(CONTENT_LENGTH) != null && !method.equals(METHOD_HEAD)) {
+            Integer len = Integer.parseInt(this.getHeader(CONTENT_LENGTH));
+            char[] buffer = new char[len];
+            reader.read(buffer);
+            body = new String(buffer);
+            System.out.println(body);//***********************************************
+        }
+
     }
 
-    public String getMethod() {
+    String getMethod() {
         return this.method;
     }
 
-    public String getHeader(String key) {
+    private String getHeader(String key) {
         if (headers != null)
             return this.headers.get(key);
         else return null;

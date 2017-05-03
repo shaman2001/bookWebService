@@ -2,6 +2,7 @@ package com.epam.rest.entity;
 
 import org.json.simple.JSONObject;
 
+import java.util.Comparator;
 import java.util.HashMap;
 
 
@@ -138,24 +139,32 @@ public class Book {
         return true;
     }
 
- /*   public boolean matches (Book query) {
-        if (query.getId() == 0 || !query.getId().equals(this.id)) return false;
-        if (query.getName().equals("") || !query.getName().equals(this.name)) return false;
-        if (query.getGenre().equals("") || !query.getGenre().equals(this.genre)) return false;
-        if (query.getAuthor().equals("") || !query.getAuthor().equals(this.author)) return false;
-        if (query.getYearOfIssue() == 0 || !query.getYearOfIssue().equals(this.year_of_issue)) return false;
-        return (query.getLink().equals("") || !query.getLink().equals(this.link));
-    }*/
+    public static class compareById implements Comparator<Book> {
+        @Override
+        public int compare(Book b1, Book b2) {
+            return b1.id - b2.id;
+        }
+    }
 
-    public JSONObject toJsonObject() {
-        JSONObject jsonObj = new JSONObject();
-        jsonObj.put("id", this.id);
-        jsonObj.put("name", this.name);
-        jsonObj.put("genre", this.genre);
-        jsonObj.put("author", this.author);
-        jsonObj.put("year_of_issue", this.year_of_issue);
-        jsonObj.put("link", this.link);
-        return jsonObj;
+    public static class compareByName implements Comparator<Book> {
+        @Override
+        public int compare(Book b1, Book b2) {
+            return b1.name.compareToIgnoreCase(b2.name);
+        }
+    }
+
+    public static class compareByAuthor implements Comparator<Book> {
+        @Override
+        public int compare(Book b1, Book b2) {
+            return b1.author.compareToIgnoreCase(b2.author);
+        }
+    }
+
+    public static class compareByYear implements Comparator<Book> {
+        @Override
+        public int compare(Book b1, Book b2) {
+            return b1.year_of_issue - b2.year_of_issue;
+        }
     }
 
     public String toString() {

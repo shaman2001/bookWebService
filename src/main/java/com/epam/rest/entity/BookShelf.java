@@ -6,7 +6,7 @@ import static com.epam.rest.constants.CommonConstants.*;
 public class BookShelf {
 
     private final static String FTP_BASE_ADDRESS = "ftp://127.0.0.1:25/pub/";
-    private static HashSet<Book> bookList = new HashSet<>();
+    private static TreeSet<Book> bookList = new TreeSet<>(new Book.compareById());
 
     static {
         bookList.add(new Book.BookBuilder(1, "Burning daylight").
@@ -25,11 +25,6 @@ public class BookShelf {
                 setGenre("esseys").setAuthor("Plutarch").setYearOfIssue(1531)
                 .setLink(FTP_BASE_ADDRESS + "morals.txt").build());
 
-    }
-
-    public static boolean loadBooksFromJson() {
-        //NOT REALIZED YET
-        return false;
     }
 
     private static boolean isBookExists(Integer id) {

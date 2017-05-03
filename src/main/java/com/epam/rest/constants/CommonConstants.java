@@ -31,6 +31,7 @@ public final class CommonConstants {
     public static final String METHOD_PUT = "PUT";
     public static final String METHOD_POST = "POST";
     public static final String METHOD_DELETE = "DELETE";
+    public static final String METHOD_HEAD = "HEAD";
 
     public static final String PARAM_ID = "id";
     public static final String PARAM_NAME = "name";
