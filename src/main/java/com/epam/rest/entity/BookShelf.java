@@ -1,15 +1,27 @@
 package com.epam.rest.entity;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 import static com.epam.rest.constants.CommonConstants.*;
 
 public class BookShelf {
 
+    private final static String JSON_FILE = "src/main/resources/books.json";
     private final static String FTP_BASE_ADDRESS = "ftp://127.0.0.1:25/pub/";
     private static TreeSet<Book> bookList = new TreeSet<>(new Book.compareById());
 
     static {
-        bookList.add(new Book.BookBuilder(1, "Burning daylight").
+        try {
+            Book[] books = new Gson().fromJson(new JsonReader(new FileReader(JSON_FILE)),Book[].class);
+            bookList.addAll(Arrays.asList(books));
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+/*        bookList.add(new Book.BookBuilder(1, "Burning daylight").
                 setGenre("novel").setAuthor("Jack London").setYearOfIssue(1990)
                 .setLink(FTP_BASE_ADDRESS + "burning_daylight.txt").build());
         bookList.add(new Book.BookBuilder(2, "For whom the bell tolls").
@@ -23,7 +35,7 @@ public class BookShelf {
                 .setLink(FTP_BASE_ADDRESS + "borodino.txt").build());
         bookList.add(new Book.BookBuilder(5, "Morals").
                 setGenre("esseys").setAuthor("Plutarch").setYearOfIssue(1531)
-                .setLink(FTP_BASE_ADDRESS + "morals.txt").build());
+                .setLink(FTP_BASE_ADDRESS + "morals.txt").build());*/
 
     }
 
