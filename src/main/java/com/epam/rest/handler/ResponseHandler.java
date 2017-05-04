@@ -61,16 +61,16 @@ public class ResponseHandler {
             return;
         }
         switch (this.requestHnd.getMethod()) {
-            case METHOD_GET:
+            case GET:
                 prepareGetPart();
                 break;
-            case METHOD_POST:
+            case POST:
                 preparePostPart();
                 break;
-            case METHOD_PUT:
+            case PUT:
                 preparePutPart();
                 break;
-            case METHOD_DELETE:
+            case DELETE:
                 prepareDeletePart();
                 break;
             default:

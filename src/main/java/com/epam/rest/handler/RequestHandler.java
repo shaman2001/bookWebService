@@ -1,6 +1,8 @@
 package com.epam.rest.handler;
 
 import org.apache.http.ProtocolVersion;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,11 +14,31 @@ import static com.epam.rest.constants.CommonConstants.*;
 
 public class RequestHandler {
 
-    private enum RequestTypes{GET, PUT, POST, DELETE}
+    public enum Method {
+                GET("GET"),
+                PUT("PUT"),
+                POST("POST"),
+                DELETE("DELETE"),
+                HEAD("HEAD");
+
+        private String name;
+
+        Method(String name) {
+            this.name = name;
+        }
+
+        public String sName() {
+            return this.name;
+        }
+
+
+    }
+
+    private static final Logger LOG = LogManager.getLogger(ServiceHandler.class);
 
     private BufferedReader reader;
     private Integer parsingCode;
-    private String method;
+    private Method method;
     private String url;
     private int[] httpVer;
     private HashMap<String, String> headers;
@@ -53,6 +75,14 @@ public class RequestHandler {
             parsingCode = 400;
             return;
         }
+        try {
+            method = Method.valueOf(cmd[0]);
+        } catch (IllegalArgumentException e) {
+            LOG.error(e.getMessage());
+            parsingCode = 405;
+            return;
+        }
+
         if (cmd[2].indexOf(PROTOCOL_HTTP) == 0 && cmd[2].indexOf(POINT_SIGN) > 5) {
             String tempArr[] = cmd[2].substring(5).split("\\.");
             try {
@@ -62,7 +92,7 @@ public class RequestHandler {
                 parsingCode = 400;
             }
         }  else parsingCode = 400;
-        method = cmd[0];
+
         Integer index = cmd[1].indexOf(QUESTION_SIGN);
         if (index < 0) url = cmd[1];
         else {
@@ -79,7 +109,7 @@ public class RequestHandler {
         if (httpVer[0] == 1 && httpVer[1] >= 1 && getHeader(HOST_STR) == null) {
             parsingCode = 400;
         }
-        if (method.equals(METHOD_PUT) && getHeader(CONTENT_LENGTH) != null) {
+        if (method.equals(Method.PUT) && getHeader(CONTENT_LENGTH) != null) {
             if (params.size() != 0) {
                 parsingCode = 400;
             } else {
@@ -125,7 +155,7 @@ public class RequestHandler {
     }
 
     private void parseBody() throws IOException {
-        if (getHeader(CONTENT_LENGTH) != null && !method.equals(METHOD_HEAD)) {
+        if (getHeader(CONTENT_LENGTH) != null && method != Method.HEAD) {
             Integer len = Integer.parseInt(this.getHeader(CONTENT_LENGTH));
             char[] buffer = new char[len];
             reader.read(buffer);
@@ -135,7 +165,7 @@ public class RequestHandler {
 
     }
 
-    String getMethod() {
+    public Method getMethod() {
         return this.method;
     }
 

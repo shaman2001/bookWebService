@@ -39,13 +39,13 @@ public class ServiceHandler {
     public void processData () {
         if (rqstHnd.getParsingCode() == 200) {
             switch (rqstHnd.getMethod()) {
-                case METHOD_GET:
+                case GET:
                     processGet();
                     break;
-                case METHOD_DELETE:
+                case DELETE:
                     processDelete();
                     break;
-                case METHOD_PUT:
+                case PUT:
                     processPut();
                     break;
                 default:
