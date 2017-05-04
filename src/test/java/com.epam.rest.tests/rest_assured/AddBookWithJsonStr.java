@@ -13,11 +13,11 @@ import static com.epam.rest.constants.CommonConstants.*;
 
 public class AddBookWithJsonStr extends BaseTest{
 
-    private final static String WRONG_JSON_OBJECT_STR = "{\"id\": 6, \"name\": \"The oldman and the sea\", " +
+    private final static String WRONG_JSON_OBJECT_STR = "{\"id\": 30, \"name\": \"The oldman and the sea\", " +
                 "\"genre\": \"novel\", \"author\": \"Ernest Hamingway\", \"year_of_writing\": 1955, " +
                 "\"locallink\": \"ftp://localhost:25/pub/the_oldman_and_the_sea.txt\"}";
 
-    private final static String PROPER_JSON_OBJECT_STR = "{\"id\": 6, \"name\": \"The oldman and the sea\", " +
+    private final static String PROPER_JSON_OBJECT_STR = "{\"id\": 30, \"name\": \"The oldman and the sea\", " +
             "\"genre\": \"novel\", \"author\": \"Ernest Hamingway\", \"year_of_issue\": 1955, " +
             "\"link\": \"ftp://localhost:25/pub/the_oldman_and_the_sea.txt\"}";
 

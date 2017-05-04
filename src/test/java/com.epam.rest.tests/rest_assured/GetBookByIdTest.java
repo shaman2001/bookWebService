@@ -34,7 +34,7 @@ public class GetBookByIdTest extends BaseTest {
     @Parameterized.Parameters(name = "{index}: Id: {0}, Book name: {1}")
     public static List<Object[]> IdData() {
         return Arrays.asList(new Object[][] {
-                { 1, "Burning daylight" },
+                { 1, "Burning Daylight" },
                 { 2, "For whom the bell tolls" },
                 { 3, "The Master and Margarita" },
                 { 4, "Borodino" },
